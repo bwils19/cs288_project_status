@@ -34,10 +34,10 @@ h1, h2 {
 
 .entry {
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    border: 1px solid #6b6760;
     padding: 15px;
     margin-bottom: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .entry h3 {
