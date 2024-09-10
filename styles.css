@@ -1,14 +1,14 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #f3f1de;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
 header {
-    background-color: #f4f4f4;
+    background-color: #0e0c09;
     padding: 1rem;
     margin-bottom: 2rem;
 }
