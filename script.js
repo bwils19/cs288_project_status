@@ -3,7 +3,7 @@ const weeklyEntries = [
     {
         week: 1,
         date: "2024-09-10",
-        content: "Started research on project topic. Identified key areas to focus on. Built this cool website."
+        content: "Built this cool website."
     },
     // this is where I need to add more entries as the project goes on
 ];
