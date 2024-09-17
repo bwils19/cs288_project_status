@@ -1,5 +1,11 @@
 // data structure for weekly entries
 const weeklyEntries = [
+    {week:2,
+     date: "2024-09-16",
+     content: "Had first group meeting on the 16th. Submitted the link to this website. Also submitted my mission statement:
+         'My mission with this project is to develop an intuitive, AI-driven Natural Language Query System for Data Visualization. This system will empower users of all technical levels to explore and visualize complex data through simple, conversational interactions. By seamlessly translating natural language queries into powerful data manipulations and tailored visualizations, the aim is to democratize data analysis and unlock the potential of data-driven decision making for organizations of all sizes.
+"
+    },
     {
         week: 1,
         date: "2024-09-10",
