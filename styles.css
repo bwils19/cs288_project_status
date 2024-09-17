@@ -7,34 +7,27 @@ body {
     padding: 20px;
     background-color: #6C7D93;
 }
-
-
 header {
     background-color: #C4C4C4;
     padding: 1rem;
     margin-bottom: 2rem;
     border-radius: 8px;
 }
-
 nav ul {
     list-style-type: none;
     padding: 0;
 }
-
 nav ul li {
     display: inline;
     margin-right: 10px;
 }
-
 nav ul li a {
     text-decoration: none;
     color: #333;
 }
-
 h1, h2 {
     color: #2c3e50;
 }
-
 .entry {
     background-color: #C4C4C4;
     border: 1px solid #333;
@@ -42,11 +35,20 @@ h1, h2 {
     margin-bottom: 20px;
     border-radius: 8px;
 }
-
 .entry h3 {
     margin-top: 0;
 }
-
+.entry img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+.entry pre {
+    background-color: #e8e8e8;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
 footer {
     margin-top: 2rem;
     text-align: center;
