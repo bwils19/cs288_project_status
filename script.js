@@ -13,7 +13,7 @@ const weeklyEntries = [
         date: "2024-09-17",
         content: [
             { type: "text", value: `<p>Had first group meeting on the 16th. Submitted the link to this website. Also submitted my mission statement:</p>
-                <p><strong>My mission with this project is to develop an intuitive, AI-driven Natural Language Query System for Data Visualization.</strong></p>
+                <p><strong>My mission with this project is to develop an intuitive, Natural Language Query System for Data Visualization.</strong></p>
                 <p>This system will empower users of all technical levels to explore and visualize complex data through simple, conversational interactions.</p>
                 <h4>Key Points:</h4>
                 <ul>
