@@ -21,7 +21,9 @@ const weeklyEntries = [
                     <li>Generate tailored visualizations</li>
                     <li>Democratize data analysis</li>
                     <li>Unlock the potential of data-driven decision making for organizations of all sizes</li>
-                </ul>` },
+                </ul>
+                <p> Also created my project spec outline which can be found here:
+                <strong><a href="https://bwils19.github.io/cs288_project_status/CSCapstoneProjectReqSpec.pdf" target="_blank">View Project Requirement Specification Slides (PDF)</a></strong></p>` },
             // { type: "image", value: "path/to/nlp-diagram.jpg", alt: "NLP component diagram" },
             // { type: "code", value: "function processQuery(text) {\n  // NLP processing code\n}" }
         ]
