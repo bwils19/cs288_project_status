@@ -10,7 +10,7 @@ const weeklyEntries = [
     },
        {
         week: 2,
-        date: "2024-09-17",
+        date: "2024-09-16",
         content: [
             { type: "text", value: `<p>Had first group meeting on the 16th. Submitted the link to this website. Also submitted my mission statement:</p>
                 <p><strong>My mission with this project is to develop an intuitive, Natural Language Query System for Data Visualization.</strong></p>
