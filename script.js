@@ -28,6 +28,33 @@ const weeklyEntries = [
             // { type: "code", value: "function processQuery(text) {\n  // NLP processing code\n}" }
         ]
     },
+           {
+        week: 3,
+        date: "2024-09-23",
+        content: [
+            { type: "text", value: `<p>Up to this point have submitted the Project Proposal and the Requirements Specification on Canvas.</p>
+                <p>This week I started planning what I am going to do for the Competency Demo. I think that breaking this down into 3 simpler
+                chunks and executing those and using more basic ideas for the demo is the way to go. For example I will build a smaller training set of 
+                data that can be used.</p>
+                <h4>3 Step Outline for Competency Demo</h4>
+                <ul>
+                    <li>Basic NLP Parsing User Query. Example: User Query: "Show me sales trends for the past 6 months", Parsed Components:
+                    {metric: "sales", time_frame: "6 months" (get max date from data and timedelta back 6 months), visualization_type: "trend"</li>
+                    <li> Generate appropriate visualization based on predefined visualization types and generate plots.</li>
+                    <li>Display with explanatory text. For example: 
+                    <ul>
+                    <li>This plot shows a general [upward, downward, stable] trend in sales over the past 6 months.</li>
+                    <li>Highest Sales: The highest sales were recorded in the [Month], reaching $[x], which is [y]% higher than the 6-month average</li>
+                    <li>Lowest sales</li>
+                    <li>MoM growth</li>
+                    </ul>
+                </ul>
+                <p>This system will empower users of all technical levels to explore and visualize complex data through simple, conversational interactions.</p>
+          
+            // { type: "image", value: "path/to/nlp-diagram.jpg", alt: "NLP component diagram" },
+            // { type: "code", value: "function processQuery(text) {\n  // NLP processing code\n}" }
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
