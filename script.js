@@ -50,9 +50,7 @@ const weeklyEntries = [
                     </ul>
                 </ul>
                 <p>This system will empower users of all technical levels to explore and visualize complex data through simple, conversational interactions.</p>
-          
-            // { type: "image", value: "path/to/nlp-diagram.jpg", alt: "NLP component diagram" },
-            // { type: "code", value: "function processQuery(text) {\n  // NLP processing code\n}" `},
+           `},
         ]
     },
 ];
