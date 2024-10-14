@@ -64,7 +64,7 @@ const weeklyEntries = [
             },
         ]
     },
-]
+];
 
 function createEntryElement(entry) {
     const entryDiv = document.createElement('div');
