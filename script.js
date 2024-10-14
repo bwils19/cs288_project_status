@@ -57,7 +57,10 @@ const weeklyEntries = [
         content: [
             { type: "text", value: `<p>I honestly got caught up in this competency demo trying to make a skeleton of the project and kind of realized yesterday that i 
             essentially just need to showcase some technologies that I have used in the past that are going to help with this prokect in particular. So I put together some slides 
-            and a demo of things I have built recently that I will leverage for this project. </p>`
+            and a demo of things I have built recently that I will leverage for this project. 
+            <strong><a href="https://bwils19.github.io/cs288_project_status/Competency_Demo.pdf" target="_blank">Competency Demo Slides (PDF)</a>
+            <strong><a href="https://bwils19.github.io/cs288_project_status/Competency_Demo_video.mov" target="_blank">Video Demonstration of Previous Project</a></strong>
+            </p>`
             },
         ]
     },
