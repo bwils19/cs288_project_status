@@ -61,9 +61,9 @@ const weeklyEntries = [
             <strong><a href="https://bwils19.github.io/cs288_project_status/Competency_Demo.pdf" target="_blank">Competency Demo Slides (PDF)</a>
             <strong><a href="https://bwils19.github.io/cs288_project_status/Competency_Demo_video.mp4" target="_blank">Video Demonstration of Previous Project</a></strong>
             </p>`
-            },
+            }
         ]
-    },
+    }
 ];
 
 function createEntryElement(entry) {
