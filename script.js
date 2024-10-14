@@ -49,9 +49,10 @@ const weeklyEntries = [
                     <li>MoM growth</li>
                     </ul>
                 </ul>
-                <p>This system will empower users of all technical levels to explore and visualize complex data through simple, conversational interactions.</p>
-           `},
-            {
+                <p>This system will empower users of all technical levels to explore and visualize complex data through simple, conversational interactions.</p>`},
+            ]
+        },
+        {
         week: 5,
         date: "2024-10-14",
         content: [
