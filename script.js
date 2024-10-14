@@ -51,6 +51,14 @@ const weeklyEntries = [
                 </ul>
                 <p>This system will empower users of all technical levels to explore and visualize complex data through simple, conversational interactions.</p>
            `},
+            {
+        week: 5,
+        date: "2024-10-14",
+        content: [
+            { type: "text", value: `<p>I honestly got caught up in this competency demo trying to make a skeleton of the project and kind of realized yesterday that i 
+            essentially just need to showcase some technologies that I have used in the past that are going to help with this prokect in particular. So I put together some slides 
+            and a demo of things I have built recently that I will leverage for this project. </p>`
+            },
         ]
     },
 ];
