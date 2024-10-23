@@ -64,6 +64,17 @@ const weeklyEntries = [
             </p>`
             }
         ]
+    },
+           {
+        week: 6,
+        date: "2024-10-21",
+        content: [
+            { type: "text", value: `<p>This week I will be focusing on the design document. I am giving a lot of thought to this as it is giving me a chance to really decide what to ficus on.
+            I am planning on putting together a design file that I will draw in Figma that is a rough sketch of what I think the user interface should look like. From here, I will develop a detailed explanation 
+            of what the code (backend and frontend) will entail. I will outline the organization and files needed for the frontend as well as processing files for the backend. I am also thinking about implementing 
+            saving the data in an AWS S3 location, so the integration of that would be a large part of this as well. 
+            </p>`}
+        ]
     }
 ];
 
