@@ -75,7 +75,7 @@ const weeklyEntries = [
             saving the data in an AWS S3 location, so the integration of that would be a large part of this as well. 
             </p>`}
         ]
-    }
+    },
                {
         week: 7,
         date: "2024-10-28",
