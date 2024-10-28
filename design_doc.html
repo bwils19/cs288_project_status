@@ -27,9 +27,28 @@
                 </ul>
             </li>
             <li class="toc-section"><a href="#core-components">2. Core Components Implementation</a></li>
+                <ul>
+                    <li class="toc-subsection"><a href="#datasource-management">2.1 Data Source Management</a></li>
+                    <li class="toc-subsection"><a href="#dataprocessing-module">2.2 Data Processing Module</a></li>
+                    <li class="toc-subsection"><a href="#dataviz-module">1.3 Data Visualization Module</a></li>
+                </ul>
             <li class="toc-section"><a href="#database-schema">3. Database Schema</a></li>
+                <ul>
+                    <li class="toc-subsection"><a href="#user-table">3.1 Users Table</a></li>
+                    <li class="toc-subsection"><a href="#metadata-table">3.2 Data Metadata Table</a></li>
+                    <li class="toc-subsection"><a href="#visualization-table">3.3 Visualization Table</a></li>
+                </ul>
             <li class="toc-section"><a href="#api-endpoints">4. API Endpoints</a></li>
+                <ul>
+                    <li class="toc-subsection"><a href="#data-source-management">4.1 Data Source Management</a></li>
+                    <li class="toc-subsection"><a href="#viz-management">4.2 Visualization Management</a></li>
+                </ul>
             <li class="toc-section"><a href="#predictive-analytics">5. Predictive Analytics</a></li>
+                  <ul>
+                    <li class="toc-subsection"><a href="#data-quality-assessment">5.1 Data Quality Assessment</a></li>
+                    <li class="toc-subsection"><a href="#method-select">5.2 Method Selection Criteria</a></li>
+                    <li class="toc-subsection"><a href="#implement-strat">5.3 Implementation Strategy</a></li>
+                </ul>
             <li class="toc-section"><a href="#error-handling">6. Error Handling</a></li>
             <li class="toc-section"><a href="#security">7. Security Considerations</a></li>
             <li class="toc-section"><a href="#testing">8. Testing Strategy</a></li>
@@ -114,7 +133,7 @@
         <section id="core-components" class="section">
             <button class="collapsible"><h2>2. Core Components Implementation</h2></button>
             <div class="content">
-                <div class="subsection">
+                <div id="datasource-management" class="subsection">
                     <h3>2.1 Data Source Management</h3>
                     <p>These are just functions that I am anticipating that I will need.</p>
                     <p>I'm thinking that I will initialize this just to handle .csv, .xlsx and .json files for now. In
@@ -223,7 +242,7 @@
                         <span class="code-comment"># Implementation for database connection. Connect to AWS</span>
                         <span class="code-keyword">pass</span></div>
                         </div>
-
+        <div id="dataprocessing-module" class="subsection">
             <h3>2.2 Data Processing Module</h3>
             <p>The data processing module will handle importing the data from S3, get the column data statistics (I know I did
             column fill rate above, but I want to add other stats here), data filtering and data aggregation.</p>
@@ -249,8 +268,8 @@
                         <span class="code-comment"># data aggregation function</span>
                         <span class="code-keyword">pass</span>
                      </div>
-
-
+                </div>
+            <div id="dataviz-module" class="subsection">
             <h3>2.3 Data Visualization Module</h3>
                 <p>This section will house all the data visualization generating code. I'll hard code in the chart types here
                 in the initialization and these will be available to the user through dropdown menus on th UI. I am thinking
@@ -280,12 +299,14 @@
                         <span class="code-keyword">pass</span>
                     </div>
                 </div>
+            </div>
         </section>
 
         <section id="database-schema" class="section">
             <button class="collapsible"><h2>3. Database Schema</h2></button>
             <div class="content">
                 <div class="subsection">
+
                 <p>
                     I need to give this section really detailed thought and it will likely change as I iterate through
                     the process (which has been my experience in the past anyway). So I quickly outlined some of the
@@ -298,6 +319,7 @@
                         I didn't add it in yet because I'm not sure exactly how I want to do it yet. I know there's a pythonic
                         way to do it and an AWS way to do it.
                     </p>
+                <div id="user-table" class="subsection">
                 <h3>3.1 Users Table</h3>
                 <div class="code-block">
                   <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">users</span> (
@@ -306,7 +328,9 @@
                     <span class="sql-column">email</span> <span class="sql-type">VARCHAR</span>(100) <span class="sql-keyword">UNIQUE NOT NULL</span>,
                     <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
                 );</div>
+                </div>
 
+                <div id="metadata-table" class="subsection">
                 <h3>3.2 Data Metadata Table</h3>
                 <div class="code-block">
                   <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">data_metadata</span> (
@@ -316,7 +340,9 @@
                     <span class="sql-column">source_type</span> <span class="sql-type">VARCHAR</span>(20) <span class="sql-keyword">NOT NULL</span>,
                     <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
                 );</div>
+                </div>
 
+                <div id="visualization-table" class="subsection">
                 <h3>3.3 Visualization Table</h3>
                     <p>
                         The thing I wanted to point out here is the <stong>viz_config</stong> JSONB field. This will house a JSON-formatted configuration for
@@ -331,6 +357,7 @@
                     <span class="sql-column">viz_config</span> JSONB <span class="sql-keyword">NOT NULL</span>,
                     <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
                 );</div>
+                </div>
 
                 </div>
             </div>
@@ -344,6 +371,7 @@
                         create a visualization, and retrieve a previous viz. I am just outlining the flask routes I think
                         I will need for this.
                     </p>
+                <div id="data-source-management" class="subsection">
                 <h3>4.1 Data Source Management</h3>
                 <div class="code-block">
                 <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/datasource/upload'</span>, methods=[<span class="code-string">'POST'</span>])
@@ -355,8 +383,9 @@
                 <span class="code-keyword">def</span> <span class="code-function">get_datasource_metadata</span>(source_id):
                     <span class="code-comment"># metadata retrieval</span>
                     <span class="code-keyword">pass</span></div>
-
                 </div>
+                </div>
+                <div id="viz-management" class="subsection">
                 <h3>4.2 Viz Management</h3>
                 <div class="code-block">
                 <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/visualization/create'</span>, methods=[<span class="code-string">'POST'</span>])
@@ -370,6 +399,7 @@
                     <span class="code-keyword">pass</span></div>
 
                 </div>
+            </div>
             </div>
         </section>
 
@@ -402,7 +432,7 @@
                     <span class="code-keyword">def</span> <span class="code-function">perform_forecast</span>(self, df, method, params):
                         <span class="code-comment"># run chosen forecasting method with appropriate parameters</span>
                         pass</div>
-
+                <div id="data-quality-assessment" class="subsection">
                 <h4>5.1 Data Quality Assessment</h4>
                 <ol class="hierarchical-list">
                     <li><strong>Data Validation Checks</strong>
@@ -427,7 +457,8 @@
                         </ul>
                     </li>
                 </ol>
-
+                    </div>
+               <div id="method-select" class="subsection">
                 <h4>5.2 Method Selection Criteria</h4>
                 <ol class="hierarchical-list">
                     <li><strong>ARIMA/SARIMA Recommended When:</strong>
@@ -463,7 +494,8 @@
                         </ul>
                     </li>
                 </ol>
-
+                </div>
+                <div id="implement-strat" class="subsection">
                 <h4>5.3 Implementation Strategy</h4>
                 <ol class="hierarchical-list">
                     <li><strong>Core Components</strong>
@@ -492,6 +524,7 @@
                     </li>
                 </ol>
                     </div>
+                </div>
                 </div>
             </section>
 
