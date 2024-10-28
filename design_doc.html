@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Design Document - Brandon Wilson Tufts CS288</title>
+    <link rel="stylesheet" href="design_doc.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <h1>Brandon Wilson</h1>
+        <h2>A Guided Data Visualization System</h2>
+        <h3>Technical Design Document</h3>
+        <h3>Tufts CS288 Fall 2024</h3>
+    </header>
+
+    <div id="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li class="toc-section"><a href="#system-architecture">1. System Architecture</a>
+                <ul>
+                    <li class="toc-subsection"><a href="#frontend-architecture">1.1 Frontend Architecture</a></li>
+                    <li class="toc-subsection"><a href="#backend-architecture">1.2 Backend Architecture</a></li>
+                    <li class="toc-subsection"><a href="#data-flow">1.3 Data Flow Architecture</a></li>
+                </ul>
+            </li>
+            <li class="toc-section"><a href="#core-components">2. Core Components Implementation</a></li>
+            <li class="toc-section"><a href="#database-schema">3. Database Schema</a></li>
+            <li class="toc-section"><a href="#api-endpoints">4. API Endpoints</a></li>
+            <li class="toc-section"><a href="#predictive-analytics">5. Predictive Analytics</a></li>
+            <li class="toc-section"><a href="#error-handling">6. Error Handling</a></li>
+            <li class="toc-section"><a href="#security">7. Security Considerations</a></li>
+            <li class="toc-section"><a href="#testing">8. Testing Strategy</a></li>
+            <li class="toc-section"><a href="#deployment">9. Deployment Configuration</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section id="system-architecture" class="section">
+            <button class="collapsible"><h2>1. System Architecture</h2></button>
+            <div class="content">
+                <div id="frontend-architecture" class="subsection">
+                    <h3>1.1 Frontend Architecture</h3>
+                    <p>Framework: Flask for server-side rendering (since I prefer using Python)</p>
+                    <p>User Interface Components:</p>
+                    <ul>
+                        <li>Navigation bar</li>
+                        <li>Data source selection panel</li>
+                        <li>Visualization configuration area</li>
+                        <li>Display area for visualizations</li>
+                        <li>Interactive elements (dropdowns, buttons, etc.)</li>
+                    </ul>
+                    <p>Client-Side Technologies:</p>
+                    <ul>
+                        <li>HTML5</li>
+                        <li>CSS3 (utilizing Flexbox/Grid for layout)</li>
+                        <li>JavaScript</li>
+                        <li>Chart.js/Plotly.js for visualization rendering → I like the python version of plotly for interactive plots</li>
+                        <li>AJAX for asynchronous data requests</li>
+                    </ul>
+                </div>
+
+                <div id="backend-architecture" class="subsection">
+                    <h3>1.2 Backend Architecture</h3>
+                    <p>Key Components:</p>
+                    <ul>
+                        <li>Web Server: Flask application server</li>
+                        <li>Data Processing Layer: Python modules for data manipulation (pandas mostly...)</li>
+                        <li>Database: SQLite for development, PostgreSQL for production (for now. I've used DynamoDB in AWS in the past and might use that since I plan
+                            to use other AWS resources for production)</li>
+                        <li>File System: Local storage for development, AWS S3 for production</li>
+                    </ul>
+                </div>
+
+                <div id="data-flow" class="subsection">
+                    <h3>1.3 Data Flow Architecture</h3>
+                    <div class="data-flow-diagram">
+                       <svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Boxes -->
+                            <rect x="10" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                            <rect x="180" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                            <rect x="350" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                            <rect x="520" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                            <rect x="690" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+
+                            <!-- Arrows -->
+                            <path d="M130 50 L180 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            <path d="M300 50 L350 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            <path d="M470 50 L520 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            <path d="M640 50 L690 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+                            <!-- Arrow marker definition -->
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Text -->
+                            <text x="70" y="55" text-anchor="middle" fill="#333" font-size="12">User Input</text>
+                            <text x="240" y="55" text-anchor="middle" fill="#333" font-size="12">Flask Router</text>
+                            <text x="410" y="55" text-anchor="middle" fill="#333" font-size="12">Data Processor</text>
+                            <text x="580" y="45" text-anchor="middle" fill="#333" font-size="12">Visualization</text>
+                            <text x="580" y="65" text-anchor="middle" fill="#333" font-size="12">Generator</text>
+                            <text x="750" y="55" text-anchor="middle" fill="#333" font-size="12">Frontend Display</text>
+                        </svg>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="core-components" class="section">
+            <button class="collapsible"><h2>2. Core Components Implementation</h2></button>
+            <div class="content">
+                <div class="subsection">
+                    <h3>2.1 Data Source Management</h3>
+                    <p>These are just functions that I am anticipating that I will need.</p>
+                    <p>I'm thinking that I will initialize this just to handle .csv, .xlsx and .json files for now. In
+                    the future I think it would be cool if I was able to create connectors to other datasources such as
+                    Redshift, S3 (read-from as well as save-to), Athena, Snowflake, MSSQL, BigQuery, Salesforce, Hubspot, etc. The list goes
+                    on and on. With that said I am going to restrict the file-size while using the free-tier AWS versions and testing locally.</p>
+                    <ol>
+                    <li><strong>File Validation:</strong> Checks file format, size, and integrity. Integrity checks would include checks for
+                        corrupt workbook data, empty files or completely empty columns, data corruption (e.g., unreadable characters, broken file
+                    structure</li>
+                        <li><strong>Data Loading:</strong> Will use pandas to read different file formats (.csv, .xlsx, .json)</li>
+                        <li><strong>Data Cleaning:</strong> Performs initial cleaning operations like:
+                            <ol>
+                                <li>Removing duplicate rows</li>
+                                <li>Handling missing values</li>
+                                <li>Basic data type inference (dates especially since these will most likely be timeseries plots that are
+                                created, but will also look at strings, integers, floats etc.)</li>
+                            </ol>
+                        </li>
+                        <li><strong>Metadata Generation:</strong> Creates metadata about the dataset including:
+                            <ol>
+                                <li>Column names and types</li>
+                                <li>Row count</li>
+                                <li>Column fill rates</li>
+                                <li>Processing timestamp</li>
+                            </ol>
+                        </li>
+                        <li><strong>Data Storage:</strong> Stores processed data with a unique identifier for later retrieval. I plan to have different
+                        S3 buckets for each user (obviously) to silo a user's data from others. </li>
+                    </ol>
+                    <p>This implementation ensures that data is properly validated, cleaned, and prepared for visualization processing in the later stages of the pipeline.</p>
+
+                  <div class="code-block">
+                <span class="code-keyword">class</span> <span class="code-function">DataSourceManager</span>:
+                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
+                        self.supported_formats = [<span class="code-string">'csv'</span>, <span class="code-string">'xlsx'</span>, <span class="code-string">'json'</span>]
+                        self.max_file_size = 50 * 1024 * 1024  <span class="code-comment"># 50MB limit</span>
+                        self.processed_files = {}
+
+                    <span class="code-keyword">def</span> <span class="code-function">validate_file</span>(self, file):
+                        <span class="code-comment"># File validation function</span>
+                        <span class="code-keyword">pass</span>
+
+                    <span class="code-keyword">def</span> <span class="code-function">process_upload</span>(self, file):
+                        <span class="code-comment"># First validate the uploaded file &rarr; bullet 1 above.</span>
+                        if not self.validate_file(file):
+                            <span class="code-keyword">raise</span> ValueError(<span class="code-string">"Invalid file format or size"</span>)
+
+                        <span class="code-comment"># Extract file extension and prepare appropriate reader</span>
+                        file_type = file.filename.split(<span class="code-string">'.'</span>)[-1]
+
+                        <span class="code-keyword">try</span>:
+                            <span class="code-keyword">if</span> file_type == <span class="code-string">'csv'</span>:
+                                df = pd.read_csv(file)
+                            <span class="code-keyword">elif</span> file_type == <span class="code-string">'xlsx'</span>:
+                                df = pd.read_excel(file)
+                            <span class="code-keyword">elif</span> file_type == <span class="code-string">'json'</span>:
+                                df = pd.read_json(file)
+
+                            <span class="code-comment"># Perform initial data cleaning</span>
+                            df = self._clean_data(df)
+
+                            <span class="code-comment"># Infer and validate data types. I need to understand if this will cause major problems or not.</span>
+                            df = self._infer_datatypes(df)
+
+                            <span class="code-comment"># Calculate the fill rate for each column. I don't care what anyone says,
+                                #this is an important metric for your data...</span>
+                            df = self._col_fill_rates(df)
+
+                            <span class="code-comment"># Generate metadata about the dataset</span>
+                            metadata = {
+                                <span class="code-string">'columns'</span>: df.columns.tolist(),
+                                <span class="code-string">'row_count'</span>: len(df),
+                                <span class="code-string">'data_types'</span>: df.dtypes.to_dict(),
+                                <span class="code-string">'column_fill_rates</span>: self._col_fill_rates(df),
+                                <span class="code-string">'processed_date'</span>: datetime.now()
+                            }
+
+                            <span class="code-comment"># Store processed data and metadata</span>
+                            file_id = str(uuid.uuid4())
+                            self.processed_files[file_id] = {
+                                <span class="code-string">'data'</span>: df,
+                                <span class="code-string">'metadata'</span>: metadata
+                            }
+
+                            <span class="code-keyword">return</span> file_id, metadata
+
+                        <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+                            <span class="code-keyword">raise</span> ProcessingError(<span class="code-string">f"Error processing file: {str(e)}"</span>)
+
+                    <span class="code-keyword">def</span> <span class="code-function">_clean_data</span>(self, df):
+                        <span class="code-comment"># Remove dupes</span>
+                        df = df.drop_duplicates()
+                        <span class="code-comment"># Handle blank or missing values</span>
+                        df = df.fillna(method=<span class="code-string">'ffill'</span>)
+                        <span class="code-keyword">return</span> df
+
+                    <span class="code-keyword">def</span> <span class="code-function">_infer_datatypes</span>(self, df):
+                        <span class="code-comment"># Convert string date types to datetime. Need to make sure if there are
+                        # timestamps, maybe break up date and time portions as well as retaining full timestamp value in separate columns.</span>
+                        <span class="code-comment"># Detect numeric columns (float or int)</span>
+                        <span class="code-comment"># Identify categorical variables</span>
+                        <span class="code-keyword">return</span> df
+
+                    <span class="code-keyword">def</span> <span class="code-function">connect_to_database</span>(self, connection_string):
+                        <span class="code-comment"># Implementation for database connection. Connect to AWS</span>
+                        <span class="code-keyword">pass</span></div>
+                        </div>
+
+            <h3>2.2 Data Processing Module</h3>
+            <p>The data processing module will handle importing the data from S3, get the column data statistics (I know I did
+            column fill rate above, but I want to add other stats here), data filtering and data aggregation.</p>
+                <div class="code-block">
+                <span class="code-keyword">class</span> <span class="code-function">DataProcessor</span>:
+                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
+                        self.data = self.load_data(data_source)
+                        self.available_cols = self.get_column_metadata()
+
+                    <span class="code-keyword">def</span> <span class="code-function">load_data</span>(self, source):
+                        <span class="code-comment"># import data from storage source</span>
+                        <span class="code-keyword">pass</span>
+
+                   <span class="code-keyword">def</span> <span class="code-function">get_column_metadata</span>(self):
+                        <span class="code-comment"># col stats analysis</span>
+                        <span class="code-keyword">pass</span>
+
+                   <span class="code-keyword">def</span> <span class="code-function">filter_data</span>(self, conditions):
+                        <span class="code-comment"># filter on desired conditions</span>
+                        <span class="code-keyword">pass</span>
+
+                   <span class="code-keyword">def</span> <span class="code-function">agg_data</span>(self, groupby, metrics):
+                        <span class="code-comment"># data aggregation function</span>
+                        <span class="code-keyword">pass</span>
+                     </div>
+
+
+            <h3>2.3 Data Visualization Module</h3>
+                <p>This section will house all the data visualization generating code. I'll hard code in the chart types here
+                in the initialization and these will be available to the user through dropdown menus on th UI. I am thinking
+                timeseries, bar chart, scatter plot or pie chart (although I might not do pie chart, kinda hate those...)
+                </p>
+                <p>
+                <strong>One thing I am thinking about is adding a predictive forecasting model to this. So if the user loads in
+                timeseries sales data for example, if they have enough data (there will need to be a check for that), then they can
+                choose to generate a forecasting model. This would require more options and functions, but would be cool.</strong>
+                </p>
+                <p>
+                Also with timeseries data, I would like to implement the option of anomaly detection if there is a lot of volatile-ish
+                daily data for example, there could be a 7-day standard deviation bound that could show up as a shaded area on the plot as well
+                as an Isolation Forest algorithm that would outline single day outliers.</p>
+                <div class="code-block">
+                <span class="code-keyword">class</span> <span class="code-function">VizGen</span>:
+                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
+                        self.supported_charts = {
+                            'time_series': self.gen_time_series,
+                            'bar_chart': self.gen_bar_chart,
+                            'scatter_plot': self.gen_scat_plot,
+                            'pie_chart': self.gen_pie
+                    }
+
+                <span class="code-keyword">def</span> <span class="code-function">gen_viz</span>(self, chart_type, data, options):
+                        <span class="code-comment"># generate chosen chart type with user chosen options</span>
+                        <span class="code-keyword">pass</span>
+                    </div>
+                </div>
+        </section>
+
+        <section id="database-schema" class="section">
+            <button class="collapsible"><h2>3. Database Schema</h2></button>
+            <div class="content">
+                <div class="subsection">
+                <p>
+                    I need to give this section really detailed thought and it will likely change as I iterate through
+                    the process (which has been my experience in the past anyway). So I quickly outlined some of the
+                    tables that I think might need to be created. I'd like to have a users table that retains user info,
+                    a data metadata table that would house information about the uploaded datasets, and a table that
+                    would house information about previously generated visualizations from datasets.
+                </p>
+                    <p>
+                        I'll say now that the users table will also have some kind of hashed password functionality as well.
+                        I didn't add it in yet because I'm not sure exactly how I want to do it yet. I know there's a pythonic
+                        way to do it and an AWS way to do it.
+                    </p>
+                <h3>3.1 Users Table</h3>
+                <div class="code-block">
+                  <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">users</span> (
+                    <span class="sql-column">user_id</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+                    <span class="sql-column">username</span> <span class="sql-type">VARCHAR</span>(50) <span class="sql-keyword">UNIQUE NOT NULL</span>,
+                    <span class="sql-column">email</span> <span class="sql-type">VARCHAR</span>(100) <span class="sql-keyword">UNIQUE NOT NULL</span>,
+                    <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
+                );</div>
+
+                <h3>3.2 Data Metadata Table</h3>
+                <div class="code-block">
+                  <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">data_metadata</span> (
+                    <span class="sql-column">source_id</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+                    <span class="sql-column">user_id</span> <span class="sql-type">INTEGER REFERENCES</span> users(user_id),
+                    <span class="sql-column">source_name</span> <span class="sql-type">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,
+                    <span class="sql-column">source_type</span> <span class="sql-type">VARCHAR</span>(20) <span class="sql-keyword">NOT NULL</span>,
+                    <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
+                );</div>
+
+                <h3>3.3 Visualization Table</h3>
+                    <p>
+                        The thing I wanted to point out here is the <stong>viz_config</stong> JSONB field. This will house a JSON-formatted configuration for
+                        the chart that is getting saved. So it would have the type, colors, title, and x and y values (column names, not the actual values). Maybe
+                        more.
+                    </p>
+                 <div class="code-block">
+                  <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">visualizations</span> (
+                    <span class="sql-column">viz_id</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+                    <span class="sql-column">source_id</span> <span class="sql-type">INTEGER REFERENCES</span> data_metadata(source_id),
+                    <span class="sql-column">viz_type</span> <span class="sql-type">VARCHAR</span>(50) <span class="sql-keyword">NOT NULL</span>,
+                    <span class="sql-column">viz_config</span> JSONB <span class="sql-keyword">NOT NULL</span>,
+                    <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
+                );</div>
+
+                </div>
+            </div>
+        </section>
+        <section id="api-endpoints" class="section">
+            <button class="collapsible"><h2>4. API Endpoints</h2></button>
+            <div class="content">
+                <div class="subsection">
+                    <p>
+                        For now what I can think of are endpoints that will upload the user's data, retrieve the user's data,
+                        create a visualization, and retrieve a previous viz. I am just outlining the flask routes I think
+                        I will need for this.
+                    </p>
+                <h3>4.1 Data Source Management</h3>
+                <div class="code-block">
+                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/datasource/upload'</span>, methods=[<span class="code-string">'POST'</span>])
+                <span class="code-keyword">def</span> <span class="code-function">upload_datasource</span>():
+                    <span class="code-comment"># file upload endpoint</span>
+                    <span class="code-keyword">pass</span>
+
+                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/datasource/&lt;source_id&gt;'</span>, methods=[<span class="code-string">'GET'</span>])
+                <span class="code-keyword">def</span> <span class="code-function">get_datasource_metadata</span>(source_id):
+                    <span class="code-comment"># metadata retrieval</span>
+                    <span class="code-keyword">pass</span></div>
+
+                </div>
+                <h3>4.2 Viz Management</h3>
+                <div class="code-block">
+                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/visualization/create'</span>, methods=[<span class="code-string">'POST'</span>])
+                <span class="code-keyword">def</span> <span class="code-function">create_visualization</span>():
+                    <span class="code-comment"># viz creation</span>
+                    <span class="code-keyword">pass</span>
+
+                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/visualization/&lt;viz_id&gt;'</span>, methods=[<span class="code-string">'GET'</span>])
+                <span class="code-keyword">def</span> <span class="code-function">get_visualization</span>(viz_id):
+                    <span class="code-comment"># viz retrieval</span>
+                    <span class="code-keyword">pass</span></div>
+
+                </div>
+            </div>
+        </section>
+
+            <section id="predictive-analytics" class="section">
+                <button class="collapsible"><h2>5. Predictive Analytics</h2></button>
+                <div class="content">
+                    <div class="subsection">
+                        <p>
+                            This is going to be only available on timeseries data. I won't implement any other types of forecasting
+                            for this project to keep the project as a whole manageable.
+                        </p>
+                        <p>
+                            Honestly, I wrote down all of the forecsting methods I could think of and outlined all the different
+                            scenarios in which I think that they would be useful, but it may come down to only implementing 2 or so of
+                            them. If I had to pick two, I'd probably land on Prophet and ARIMA, but we'll see when we start implementing all
+                            of this.
+                        </p>
+                     <div class="code-block">
+                <span class="code-keyword">class</span> <span class="code-function">TimeSeriesAnalyzer</span>:
+                    <span class="code-keyword">def</span> <span class="code-function">validate_data_quality</span>(self, df):
+                        <span class="code-comment"># Assess data characteristics for method selection, basically make sure the data is
+                        fit for predictive analysis.</span>
+                        <span class="code-comment"># Return data quality metrics and recommended forecasting method</span>
+                        pass
+
+                    <span class="code-keyword">def</span> <span class="code-function">select_forecasting_method</span>(self, data_quality_metrics):
+                        <span class="code-comment"># Choose appropriate forecasting method based on the above data characteristics</span>
+                        pass
+
+                    <span class="code-keyword">def</span> <span class="code-function">perform_forecast</span>(self, df, method, params):
+                        <span class="code-comment"># run chosen forecasting method with appropriate parameters</span>
+                        pass</div>
+
+                <h4>5.1 Data Quality Assessment</h4>
+                <ol class="hierarchical-list">
+                    <li><strong>Data Validation Checks</strong>
+                        <ul>
+                            <li>Time series length (minimum points needed). For basic statistical analysis, the data will need to
+                            have a min of 50 data points for reliable statistical inference. Playing it safer than the central limit theorem
+                            which is 30 minimum. Dependent on the type of forecasting model that is chosen, these values will vary.
+                            For seasonality data (yearly with like holiday sales etc.) it'll need to have at least three full cycles.
+                            Other methods like ARIMA will need like 100+ data points.</li>
+                            <li>Frequency consistency - what's the cadence of the timeseries data?</li>
+                            <li>Missing data percentage</li>
+                            <li>Outlier detection - will likely use Isolation Forest for this. </li>
+                            <li>Seasonality presence - will calculate the number of seasonality seasons are in the data.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Quality Metrics</strong>
+                        <ul>
+                            <li>Data completeness </li>
+                            <li>Regularity</li>
+                            <li>Noise level assessment - I'll use rolling averages to validate</li>
+                            <li>Trend strength measurement - I'll use a simple regression slope here.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>5.2 Method Selection Criteria</h4>
+                <ol class="hierarchical-list">
+                    <li><strong>ARIMA/SARIMA Recommended When:</strong>
+                        <ul>
+                            <li>Clean, regular data with few gaps</li>
+                            <li>Clear seasonal patterns</li>
+                            <li>Shorter-term forecasting needed</li>
+                            <li>High importance on statistical interpretation</li>
+                        </ul>
+                    </li>
+                    <li><strong>Prophet Recommended When:</strong>
+                        <ul>
+                            <li>Irregular or missing data present</li>
+                            <li>Multiple seasonality patterns</li>
+                            <li>Holiday effects need consideration</li>
+                            <li>Quick implementation needed</li>
+                        </ul>
+                    </li>
+                    <li><strong>LSTM/Neural Networks Recommended When: (might not go to this extent)</strong>
+                        <ul>
+                            <li>Large dataset available (1000+ points)</li>
+                            <li>Complex, non-linear patterns present</li>
+                            <li>Multiple features/variables available</li>
+                            <li>High computational resources available</li>
+                        </ul>
+                    </li>
+                    <li><strong>XGBoost/LightGBM Recommended When:</strong>
+                        <ul>
+                            <li>Medium to large datasets</li>
+                            <li>Multiple external features available</li>
+                            <li>Fast training/prediction required</li>
+                            <li>Handling irregular patterns needed</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>5.3 Implementation Strategy</h4>
+                <ol class="hierarchical-list">
+                    <li><strong>Core Components</strong>
+                        <ul>
+                            <li>Automate data quality assessment</li>
+                            <li>Method selection algorithm based on the results of the quality assessment</li>
+                            <li>Modular forecasting implementation</li>
+                            <li>Performance evaluation metrics - MAE, MSE, RMSE, Forecast error. maybe others?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Required Dependencies</strong>
+                        <ul>
+                            <li>pandas & numpy: Data handling</li>
+                            <li>statsmodels: Statistical analysis</li>
+                            <li>scikit-learn: Model evaluation</li>
+                            <li>Additional packages based on selected methods</li>
+                        </ul>
+                    </li>
+                    <li><strong>Output Format</strong>
+                        <ul>
+                            <li>Forecast values with confidence intervals - going forward on the timeseries plot</li>
+                            <li>Model performance metrics</li>
+                            <li>Data quality report</li>
+                            <li>Method selection justification - based of original data quality</li>
+                        </ul>
+                    </li>
+                </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section id="error-handling" class="section">
+            <button class="collapsible"><h2>6. Error Handling</h2></button>
+            <div class="content">
+                <div class="subsection">
+                    <p>
+                        Since a lot of the user input is going to be chosen from dropdown menus, I am anticipating the
+                        error handling to be on things such as uploading, downloading datasets, connection to AWS, as
+                        well as data processing errors and invalid API requests. I honestly don't have to much else to
+                        write here except that there will be error handling when this gets implemented each section
+                        at a time.
+
+                    </p>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="security" class="section">
+            <button class="collapsible"><h2>7. Security Considerations</h2></button>
+            <div class="content">
+                <div class="subsection">
+                    <p>
+                        So, I have been thinking about this a lot. And since we would be (in a commercial environment) be
+                        dealing with people's proprietary data, and data security and data governance need to be at the
+                        forefront of an organization that utilizes data, these considerations are very serious.
+                        I have essentially chosen AWS S3 for this reason. Using locally saved data I think might be good
+                        enough for this project, I know that AWS automatically encrypts all data uploaded to S3 and keeps
+                        it safe. Another reason for choosing S3 that isn't security related is scalability.
+
+                    </p>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="testing" class="section">
+            <button class="collapsible"><h2>8. Testing Strategy</h2></button>
+            <div class="content">
+                <div class="subsection">
+                    <p>
+                        For testing, I plan to begin by running data that is saved locally, writing test modules that will
+                        execute specific functionality of the data. I'll build the UI first, and then test and iterate
+                        each functionality as I add it.
+                    </p>
+                    <p>
+                        After I get the UI and some basic data plotting, then I will test the predicitve analytics portion
+                        of the project. I want to write unit tests that will test various cases and I will also try and
+                        provide data and requests that will break it to ensure robustness.
+                    </p>
+                    <p>
+                        Lastly I will implement database and data storage connections. These will also have their own unit tests
+                        that I will be able to run.
+                    </p>
+
+                </div>
+            </div>
+        </section>
+
+                <section id="deployment" class="section">
+            <button class="collapsible"><h2>9. Deployment</h2></button>
+            <div class="content">
+                <div class="subsection">
+                    <p>
+                        My thoughts as I sit and type this out this evening, is that I will deploy this on github pages
+                        as a web app. The user will be able to login, load a datasource, and then go through guided steps
+                        to generate a plot of their data with explanations.
+                    </p>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Brandon Wilson - Tufts CS Capstone Project - Fall 2024</p>
+    </footer>
+
+    <script src="design_doc.js"></script>
+</body>
+</html>
