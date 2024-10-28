@@ -76,6 +76,16 @@ const weeklyEntries = [
             </p>`}
         ]
     }
+               {
+        week: 7,
+        date: "2024-10-28",
+        content: [
+            { type: "text", value: `<p>I completed the design document this past week and it is available here. 
+            <strong><a href="design_doc.html" target="_blank">View Design Document</a></strong>.
+            Looking forward to getting some feedback on the project tomorrow!
+            </p>`}
+        ]
+    }
 ];
 
 function createEntryElement(entry) {
