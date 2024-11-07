@@ -53,7 +53,8 @@
             <li class="toc-section"><a href="#security">7. Security Considerations</a></li>
             <li class="toc-section"><a href="#testing">8. Testing Strategy</a></li>
             <li class="toc-section"><a href="#deployment">9. Deployment Configuration</a></li>
-            <li class="toc-section"><a href="#deployment">10. Implementation Timeline</a></li>
+            <li class="toc-section"><a href="#goals">10. Reach Goals</a></li>
+            <li class="toc-section"><a href="#timeline">11. Implementation Timeline</a></li>
         </ul>
     </div>
 
@@ -596,6 +597,88 @@
                         as a web app. The user will be able to login, load a datasource, and then go through guided steps
                         to generate a plot of their data with explanations.
                     </p>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="goals" class="section">
+            <button class="collapsible"><h2>10. Reach Goals</h2></button>
+            <div class="content">
+                <div class="subsection">
+               <strong>Advanced Analytics</strong>
+                    <p>
+                    There are several things I could do here to give this application the ability to
+                    have more advanced analytical features. One feature would be adding in anomaly detection like what
+                    I showed in the competency demo where an Isolation Forest algorithm was used on timeseries data as
+                    well as 2 standard deviation bars on a 7 day rolling window. Another aspect could be the
+                    implementation of confidence interval visualizations. I'd love to implement that into the
+                    forecasting out of the gate, but I putting it here in the reach goals as I am not quite sure what
+                    the lift for that feature would be yet. And lastly I think an automated seasonality detection
+                    algorithm would be a cool feature as well. This would give the user more automated insights into
+                    their data that maybe they hadn't realized just by plotting basic plots.
+                    </p>
+
+                    <strong>User Experience Enhancements</strong>
+                    <p>
+                        There are probably too many things that could be listed under this category, but I believe that
+                        for an application like this, and is actually my main goal for this project, is to keep this
+                        simple. Keep it easy for the user, keep it streamlined, concise and only produce plots or
+                        functions of value. That being said, these are some functionality improvement ideas that I had that I
+                        believe a user would find useful. Interactive visualization customization. This is a pretty far-
+                        reach goal I think, but be able to let the user drag and drop fields into a plotting area would
+                        be really cool. Another one would be dashboard creation, saving and exporting into multiple
+                        formats. Also in the future customizable reporting templates would be great. I started this
+                        project with the idea of this being used within sales organizations for their salesforce to
+                        track benchmarks, goals and quotas. But this could easily be expanded to many other areas,
+                        data quality reporting, dashboards for the medical field, supply chain, education systems,
+                        reatil, e-commerce etc.
+                    </p>
+
+                   <strong>Integration Features</strong>
+                        <p>
+                            Some of these features are planned features for the commercial product I want to create,
+                            although for this project would definitely be considered a reach goal. Some
+                            integration features that I would love to implement are real-time data streaming capability,
+                            the ability to export to various platforms like Power BI or Tableau, and automated analytics
+                            scheduling. The automated scheduling would be a big needle-mover for a lot of organizations
+                            I have spoken with already. They would love the functionality to build a dashboard and then
+                            have that dashboard automatically updated and sent in an email to a predetermined
+                            recipient list on a predetermined cadence.
+                        </p>
+                    <strong>Advanced Infrastructure</strong>
+                    <p>
+                        Lastly I think some more advanced infrastructure like caching for faster analysis (this has
+                        proven to be slightly difficult in the past), parallel processing like Dask and PySpark for
+                        large dataset processing as well as an automated back up system, but why wouldn't you back
+                        things up?
+                    </p>
+                </div>
+            </div>
+        </section>
+
+                <section id="timeline" class="section">
+            <button class="collapsible"><h2>11. Implementation Timeline</h2></button>
+            <div class="content">
+                <div class="subsection">
+                    <ul>
+                        <li>By Week of <strong>01/20:</strong> Have basic Flask structure set up and have user authentication
+                        set up.</li>
+                        <li>By Week of <strong>02/03:</strong> Finish the database schema and the basic file upload
+                            functionality, including the data metadata.</li>
+                        <li>By Week of <strong>02/17:</strong> Have data validation and cleaning functions implemented
+                            and build the data quality assessment module. Create basic data visualization templates
+                        and set up API endpoints for data retrieval.</li>
+                        <li>By Week of <strong>03/03:</strong> :( Have timeseries analysis components implemented.
+                        Create visualization generation system and performance metrics calculations.</li>
+                        <li>By Week of <strong>03/17:</strong> Build forecasting model selection logic.</li>
+                        <li>By Week of <strong>03/31:</strong> Work on frontend improvements, comprehensive error
+                        handling.</li>
+                        <li>By Week of <strong>04/28:</strong> April will be dedicated to continual testing, reach
+                        goals if there is time and building the final presentation.</li>
+
+
+                    </ul>
 
                 </div>
             </div>
