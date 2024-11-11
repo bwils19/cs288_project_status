@@ -96,6 +96,15 @@ const weeklyEntries = [
             since it is Veteran's Day. One thing that I think I'll do is create a Figma design file that would show what the frontend would look like during the rest of this semester. 
             </p>`}
         ]
+    },
+                       {
+        week: 9,
+        date: "2024-11-11",
+        content: [
+            { type: "text", value: `<p>Had a group meeting this week. Updated the design document to include the project timeline and reach goals last week. Will hope for feedback on that and plan to 
+            start developing the first goal in the timeline which is the structure of the flask app and user authentication. I think that I'll work on a Figma design of the front end UI as well this week. 
+            </p>`}
+        ]
     }
 ];
 
