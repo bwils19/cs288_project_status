@@ -105,7 +105,49 @@ const weeklyEntries = [
             start developing the first goal in the timeline which is the structure of the flask app and user authentication. I think that I'll work on a Figma design of the front end UI as well this week. 
             </p>`}
         ]
-    }
+    },
+                       {
+        week: 10,
+        date: "2024-11-18",
+        content: [
+            { type: "text", value: `<p>Ok. So some deep thinking and reflection went on this week. I tried to zoom out and think about the project in the sense of how it would be useful, who it 
+            would be useful for, what problem it would solve, and how it could add value to, well, anything. My initial thinking as that it could be used for sales teams to track their benchmarks and how 
+            far away individuals and teams were from monthly quotas. I almost fell asleep writing that sentence. Sure, there's a need for that. I've spoken with several friends who work for CRM companies and
+            who also work at my company that work with sales teams daily and I have gotten feedback that a product like that with specific functionalities would be useful. But what it comes down to really is 
+            (for this project and for now anyway) is whether I find this an interesting thing to persue. Am I excited to tell people that I'm working on something like this? Not really. Not embarassed, but 
+            definitely not pumped about it. 
+            </p>
+            <p>
+            So I did something a little different that I think is going to pivot this project in a more interesting direction. I'm not totally taking a left turn, I'm viewing this as focusing the project 
+            on something where there is a greater need and higher potential for impact. 
+            </p>
+            <p>
+            The first thing I did was look at the websites G2, Capterra and Trustradius. These websites allow people to view comparisons between software products and read reviews on them before deciding to
+            purchase a piece of software for their intended purpose. I looked for software where a lot of the options all had relatively poor reviews. One of the things I came across was financial risk 
+            assessment software. There are some very robust options out there (Bloomberg Terminal, BlackRock Aladdin, MSCI RiskMetrics) that have a ton of functionality, even aside from risk assessment, 
+            that had a lot of the same sentiment I've seen with programs like Tableau, Power BI and Looker, there's just an overwhelming amount of options that aren't intuitively laid out. The price point
+            is way to high for mid-market and smaller shops and often times it's way more than they need. So I reached out to a good friend of mine that works as an Asset Manager at Wellington. He 
+            introduced me to a friend and former colleague of his who used to work for Cambridge Associates, then Wellington and is currently a consultant for pensions and endowments (Tufts is a client 
+            of his). He generously gave me a few hours of his time on Wednesday this week as I explained my intention and things that I thought I would do with some software like this. I described how 
+            I thought I could offer a user-friendly, tiered functionality with associated price points, automated portfolio assessment, automated stress testing as well as no-code report generation and 
+            saving for risk managers, asset managers and allocators. The feedback I recieved was really positive and encouraging. He echoed a lot of what I had already read on the review sites that 
+            Wellington and Cambridge Associates had tried to use Risk Metrics (and Tufts I think too) and had given up. They had needed technically savvy people to use the software and build pipelines
+            and when those people left the companies, the company was unable to maintain them. Then they tried to build solutions in house, and those failed as well. 
+            </p>
+            <p>
+            All that being said, I have at least some confirmation from a person who has spent a couple decades in the investment financial world that there is a need for a solution like this. He has even 
+            offered to work with in the capacity of me sending him early versions of the software and he will give me feedback. He said he would even be willing to meet every couple of weeks to discuss 
+            the project and to make sure I am still heading down a path of a solution. He is also going to reach out to contacts in his circle and gather more information for me. All in all, it was really
+            great speaking with him, and I thought that this would be a good path to take the project. Still a user-friendly, data-visualtion, data-analysis web-based platform that will offer ML 
+            predicitive analytics to some capacity. 
+            </p>
+            <p>
+            I am excited for the direction that this project is going in now and I feel that this more focused approach gives me a clearer vision, roadmap and path to a product that is solving a need in a
+            (hopefully) very lucrative field. 
+            </p>
+            `}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
