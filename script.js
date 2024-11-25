@@ -148,6 +148,16 @@ const weeklyEntries = [
             `}
         ]
     },
+                   {
+        week: 11,
+        date: "2024-11-25",
+        content: [
+            { type: "text", value: `<p>I have completed redoing the entire design document for my project to focus on the financial risk platfform. This was pretty time consuming but overall
+            I feel a lot better now that I have a focsused approach to the project now. This week I will begin getting a head start on some of this. I think the first thing that I'll do is get a 
+            login and signup page sorted out and get the user info saved to a sqlite database. Also, we'll see what Marty says in the group meeting this afternoon. 
+            </p>`}
+        ]
+    }
 ];
 
 function createEntryElement(entry) {
