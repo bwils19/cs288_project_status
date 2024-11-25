@@ -6,12 +6,33 @@
     <title>Technical Design Document - Brandon Wilson Tufts CS288</title>
     <link rel="stylesheet" href="design_doc.css">
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script>
+        // Function to uncollapse all sections
+        function expandAllSections() {
+            const collapsibles = document.querySelectorAll('.collapsible');
+            collapsibles.forEach(button => {
+                if (!button.classList.contains('active')) {
+                    button.click();
+                }
+            });
+        }
+        function toggleSections() {
+            const button = document.getElementById('expand-collapse-button');
+            const sections = document.querySelectorAll('.content');
+            const isExpanded = button.textContent === "Expand All Sections";
 
+            sections.forEach(section => {
+                section.style.display = isExpanded ? "block" : "none";
+            });
+
+            button.textContent = isExpanded ? "Collapse All Sections" : "Expand All Sections";
+        }
+    </script>
 </head>
 <body>
     <header>
         <h1>Brandon Wilson</h1>
-        <h2>A Guided Data Visualization System</h2>
+        <h2>Risk Assessment and Analysis Platform</h2>
         <h3>Technical Design Document</h3>
         <h3>Tufts CS288 Fall 2024</h3>
     </header>
@@ -19,671 +40,538 @@
     <div id="toc">
         <h2>Table of Contents</h2>
         <ul>
-            <li class="toc-section"><a href="#system-architecture">1. System Architecture</a>
-                <ul>
-                    <li class="toc-subsection"><a href="#frontend-architecture">1.1 Frontend Architecture</a></li>
-                    <li class="toc-subsection"><a href="#backend-architecture">1.2 Backend Architecture</a></li>
-                    <li class="toc-subsection"><a href="#data-flow">1.3 Data Flow Architecture</a></li>
-                </ul>
-            </li>
-            <li class="toc-section"><a href="#core-components">2. Core Components Implementation</a></li>
-                <ul>
-                    <li class="toc-subsection"><a href="#datasource-management">2.1 Data Source Management</a></li>
-                    <li class="toc-subsection"><a href="#dataprocessing-module">2.2 Data Processing Module</a></li>
-                    <li class="toc-subsection"><a href="#dataviz-module">1.3 Data Visualization Module</a></li>
-                </ul>
-            <li class="toc-section"><a href="#database-schema">3. Database Schema</a></li>
-                <ul>
-                    <li class="toc-subsection"><a href="#user-table">3.1 Users Table</a></li>
-                    <li class="toc-subsection"><a href="#metadata-table">3.2 Data Metadata Table</a></li>
-                    <li class="toc-subsection"><a href="#visualization-table">3.3 Visualization Table</a></li>
-                </ul>
-            <li class="toc-section"><a href="#api-endpoints">4. API Endpoints</a></li>
-                <ul>
-                    <li class="toc-subsection"><a href="#data-source-management">4.1 Data Source Management</a></li>
-                    <li class="toc-subsection"><a href="#viz-management">4.2 Visualization Management</a></li>
-                </ul>
-            <li class="toc-section"><a href="#predictive-analytics">5. Predictive Analytics</a></li>
-                  <ul>
-                    <li class="toc-subsection"><a href="#data-quality-assessment">5.1 Data Quality Assessment</a></li>
-                    <li class="toc-subsection"><a href="#method-select">5.2 Method Selection Criteria</a></li>
-                    <li class="toc-subsection"><a href="#implement-strat">5.3 Implementation Strategy</a></li>
-                </ul>
-            <li class="toc-section"><a href="#error-handling">6. Error Handling</a></li>
-            <li class="toc-section"><a href="#security">7. Security Considerations</a></li>
-            <li class="toc-section"><a href="#testing">8. Testing Strategy</a></li>
-            <li class="toc-section"><a href="#deployment">9. Deployment Configuration</a></li>
-            <li class="toc-section"><a href="#goals">10. Reach Goals</a></li>
-            <li class="toc-section"><a href="#timeline">11. Implementation Timeline</a></li>
+            <li class="toc-section"><a href="#high-level-summary">1. Project Summary</a></li>
+            <li class="toc-section"><a href="#system-architecture">2. System Architecture</a></li>
+            <li class="toc-section"><a href="#core-components">3. Core Components Implementation</a></li>
+            <li class="toc-section"><a href="#database-schema">4. Database Schema</a></li>
+            <li class="toc-section"><a href="#api-endpoints">5. API Endpoints</a></li>
+            <li class="toc-section"><a href="#predictive-analytics">6. Predictive Analytics</a></li>
+            <li class="toc-section"><a href="#error-handling">7. Error Handling</a></li>
+            <li class="toc-section"><a href="#security">8. Security Considerations</a></li>
+            <li class="toc-section"><a href="#testing">9. Testing Strategy</a></li>
+            <li class="toc-section"><a href="#deployment">10. Deployment Configuration</a></li>
+            <li class="toc-section"><a href="#goals">11. Reach Goals</a></li>
+            <li class="toc-section"><a href="#timeline">12. Implementation Timeline</a></li>
         </ul>
+            <button id="expand-collapse-button" class="expand-button" onclick="toggleSections()">Expand All Sections</button>
+
     </div>
 
     <main>
+        <section id="high-level-summary" class="section">
+            <h2>1. Project Summary</h2>
+            <p>
+                The Risk Assessment and Analysis Platform is a web-based solution designed to simplify and streamline the
+                process of evaluating financial portfolio risk. The platform provides tools for visualizing diversification,
+                assessing overlap, conducting stress testing, and offering predictive analytics to empower asset managers,
+                risk managers, and institutional allocators to make data-driven decisions. By leveraging intuitive data
+                visualizations, guided workflows, and automated assessments, the platform aims to address pain points in
+                an underserved market segment where existing solutions are often overly complex or cost-prohibitive.
+            </p>
+            <p>
+                The platform is targeted at mid-market assest managers, pensions, endowments and smaller shops that lack
+                the technical resources and know-how and budgets for the robust existing enterprise-grade solutions such
+                as Bloomberg Terminal, BlackRock Aladdin or MSCI RiskMetrics. These organizations often struggle with
+                maintaining or developing in-house solutions and are left without an accessible, user-friendly, yet
+                powerful alternative.
+            </p>
+            <h3><strong>Motivation</strong></h3>
+            <p>
+                This project focus comes from a deep reflection about the kind of work that excites me, the problems I
+                want to solve, and how I can create meaningful impact. My initial project idea, a general-purpose
+                visualization platform for non-technical people who needed to gain insight from their data was starting to feel
+                very uninspired. While it addressed a need it lacked the personal interest and transformative potential
+                and focus I seek.
+            </p>
+            <p>
+                Pivoting from a broader idea to a more focused, impactful approach I started to doing research where there
+                might be gaps in user needs and existing solutions. Digging through the software review platforms G2,
+                Capterra and TrustRadius, I discovered that financial risk assessment tools often receive poor reviews
+                due to steep learning curves, unintuitive interfaces, and high costs. These particular issues have left
+                mid-market and smaller firms underserved, despite their need for risk assessment tools and solutions.
+            </p>
+            <p>
+                I sought validation of this idea from industry professionals, including a former Cambridge Associates
+                and Wellington Risk Manager who is currently a consultant (including for Tufts), who works closely with
+                pensions, endowments and institutional investors. His feedback aligned with my initial research.
+                <ul>
+            <li>Companies often abandon complex solutions like MSCI RiskMetrics because they require technically skilled
+            users to build and maintain reports.</li>
+            <li>When these technically skilled employees leave the organization, the organization losses the ability
+            to adapt these tools effectively.</li>
+            <li>Attempting to build in-house solutions frequently results in unsustainable, resource-drained projects.</li>
+        </ul>
+            </p>
+            <p>
+                These conversations from industry experts validated the need for a more intuitive, scalable and affordable
+                platform. I was really encouraged by the consultant's willingness to provide ongoing feedback and connect
+                me with additional industry contacts, helping to ensure the project stays in line with the industry needs.
+            </p>
+                            <h3><strong>Project Vision</strong></h3>
+
+            <p>
+                This project is a user-friendly platform that combines the simplicity of no-code solutions with the
+                sophistication required for financial risk analysis. I plan to provide tiered functionality to
+                accomodate different budgets and needs, enabling users to:
+                <ul>
+            <li>Upload and analyze portfolios with automated overlap detection, diversification metrics, and
+            risk factor exposure.</li>
+            <li>Perform stress tests using historical scenarios or customizable parameters.</li>
+            <li>Generate professional reports with visualizations that are easy to interpret and share.</li>
+            <li>Leverage predictive analytics for market trends and portfolio behavior.</li>
+        </ul>
+            By focusing on accessibility, automation, and actionable insights, this platform aspires to bridge the gap
+            between powerful enterprise solutions and the unmet needs of smaller organizations.
+            </p>
+            <p>
+                This project presents an opportunity to solve real-world problems, have commercial viability, gain
+                valuable insight from industry professionals, and build something I am proud of. The success of this
+                project hinges on the ability to simplify complex processes, provide value to users and create a
+                pathway to further innovations in financial technology. As I once heard from somebody sometime somewhere,
+                "The worst thing you can do is build something and no one gives a shit." I really don't think this is that.
+            </p>
+        </section>
+
         <section id="system-architecture" class="section">
-            <button class="collapsible"><h2>1. System Architecture</h2></button>
+            <button class="collapsible"><h2>2. System Architecture</h2></button>
             <div class="content">
                 <div id="frontend-architecture" class="subsection">
-                    <h3>1.1 Frontend Architecture</h3>
-                    <p>Framework: Flask for server-side rendering (since I prefer using Python)</p>
+                    <h3>2.1 Frontend Architecture</h3>
+                    <p>Framework: Flask for server-side rendering</p>
                     <p>User Interface Components:</p>
                     <ul>
-                        <li>Navigation bar</li>
-                        <li>Data source selection panel</li>
-                        <li>Visualization configuration area</li>
-                        <li>Display area for visualizations</li>
-                        <li>Interactive elements (dropdowns, buttons, etc.)</li>
-                    </ul>
-                    <p>Client-Side Technologies:</p>
-                    <ul>
-                        <li>HTML5</li>
-                        <li>CSS3 (utilizing Flexbox/Grid for layout)</li>
-                        <li>JavaScript</li>
-                        <li>Chart.js/Plotly.js for visualization rendering → I like the python version of plotly for interactive plots</li>
-                        <li>AJAX for asynchronous data requests</li>
+                        <li>Dashboard navigation</li>
+                        <li>Portfolio upload and summary display</li>
+                        <li>Risk metric visualizations</li>
+                        <li>Interactive charts for overlap and risk exposure</li>
+                        <li>Market trends and news sections</li>
                     </ul>
                 </div>
 
                 <div id="backend-architecture" class="subsection">
-                    <h3>1.2 Backend Architecture</h3>
-                    <p>Key Components:</p>
+                    <h3>2.2 Backend Architecture</h3>
                     <ul>
-                        <li>Web Server: Flask application server</li>
-                        <li>Data Processing Layer: Python modules for data manipulation (pandas mostly...)</li>
-                        <li>Database: SQLite for development, PostgreSQL for production (for now. I've used DynamoDB in AWS in the past and might use that since I plan
-                            to use other AWS resources for production)</li>
-                        <li>File System: Local storage for development, AWS S3 for production</li>
+                        <li>Web Server: Flask</li>
+                        <li>Data Processing: Python modules (pandas, NumPy)</li>
+                        <li>APIs for market data retrieval (e.g., Alpha Vantage, Yahoo Finance)</li>
+                        <li>Database: SQLite (development) and PostgreSQL (production)</li>
+                        <li>Data Storage: AWS S3 for secure file storage</li>
                     </ul>
                 </div>
 
                 <div id="data-flow" class="subsection">
-                    <h3>1.3 Data Flow Architecture</h3>
+                    <h3>2.3 Data Flow Architecture</h3>
                     <div class="data-flow-diagram">
-                       <svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Boxes -->
-                            <rect x="10" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
-                            <rect x="180" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
-                            <rect x="350" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
-                            <rect x="520" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
-                            <rect x="690" y="20" width="120" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                        <div class="data-flow-diagram">
+                            <svg viewBox="0 0 1100 150" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Boxes -->
+                                <rect x="10" y="40" width="150" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                                <rect x="190" y="40" width="150" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                                <rect x="370" y="40" width="150" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                                <rect x="550" y="40" width="150" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                                <rect x="730" y="40" width="150" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
+                                <rect x="910" y="40" width="150" height="60" rx="8" fill="#C4C4C4" stroke="#333"/>
 
-                            <!-- Arrows -->
-                            <path d="M130 50 L180 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
-                            <path d="M300 50 L350 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
-                            <path d="M470 50 L520 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
-                            <path d="M640 50 L690 50" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                <!-- Arrows -->
+                                <path d="M160 70 L190 70" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                <path d="M340 70 L370 70" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                <path d="M520 70 L550 70" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                <path d="M700 70 L730 70" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                <path d="M880 70 L910 70" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
 
-                            <!-- Arrow marker definition -->
-                            <defs>
-                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
-                                </marker>
-                            </defs>
+                                <!-- Arrow marker definition -->
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                                    </marker>
+                                </defs>
 
-                            <!-- Text -->
-                            <text x="70" y="55" text-anchor="middle" fill="#333" font-size="12">User Input</text>
-                            <text x="240" y="55" text-anchor="middle" fill="#333" font-size="12">Flask Router</text>
-                            <text x="410" y="55" text-anchor="middle" fill="#333" font-size="12">Data Processor</text>
-                            <text x="580" y="45" text-anchor="middle" fill="#333" font-size="12">Visualization</text>
-                            <text x="580" y="65" text-anchor="middle" fill="#333" font-size="12">Generator</text>
-                            <text x="750" y="55" text-anchor="middle" fill="#333" font-size="12">Frontend Display</text>
-                        </svg>
+                                <!-- Text -->
+                                <text x="85" y="75" text-anchor="middle" fill="#333" font-size="12">User Input</text>
+                                <text x="265" y="75" text-anchor="middle" fill="#333" font-size="12">API Pull</text>
+                                <text x="445" y="75" text-anchor="middle" fill="#333" font-size="12">Data Processor</text>
+                                <text x="625" y="75" text-anchor="middle" fill="#333" font-size="12">Save to S3</text>
+                                <text x="805" y="75" text-anchor="middle" fill="#333" font-size="12">Visualization</text>
+                                <text x="985" y="75" text-anchor="middle" fill="#333" font-size="12">Frontend Display</text>
+                            </svg>
                         </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="core-components" class="section">
-            <button class="collapsible"><h2>2. Core Components Implementation</h2></button>
+            <button class="collapsible"><h2>3. Core Components Implementation</h2></button>
             <div class="content">
                 <div id="datasource-management" class="subsection">
-                    <h3>2.1 Data Source Management</h3>
-                    <p>These are just functions that I am anticipating that I will need.</p>
-                    <p>I'm thinking that I will initialize this just to handle .csv, .xlsx and .json files for now. In
-                    the future I think it would be cool if I was able to create connectors to other datasources such as
-                    Redshift, S3 (read-from as well as save-to), Athena, Snowflake, MSSQL, BigQuery, Salesforce, Hubspot, etc. The list goes
-                    on and on. With that said I am going to restrict the file-size while using the free-tier AWS versions and testing locally.</p>
-                    <ol>
-                    <li><strong>File Validation:</strong> Checks file format, size, and integrity. Integrity checks would include checks for
-                        corrupt workbook data, empty files or completely empty columns, data corruption (e.g., unreadable characters, broken file
-                    structure</li>
-                        <li><strong>Data Loading:</strong> Will use pandas to read different file formats (.csv, .xlsx, .json)</li>
-                        <li><strong>Data Cleaning:</strong> Performs initial cleaning operations like:
-                            <ol>
-                                <li>Removing duplicate rows</li>
-                                <li>Handling missing values</li>
-                                <li>Basic data type inference (dates especially since these will most likely be timeseries plots that are
-                                created, but will also look at strings, integers, floats etc.)</li>
-                            </ol>
-                        </li>
-                        <li><strong>Metadata Generation:</strong> Creates metadata about the dataset including:
-                            <ol>
-                                <li>Column names and types</li>
-                                <li>Row count</li>
-                                <li>Column fill rates</li>
-                                <li>Processing timestamp</li>
-                            </ol>
-                        </li>
-                        <li><strong>Data Storage:</strong> Stores processed data with a unique identifier for later retrieval. I plan to have different
-                        S3 buckets for each user (obviously) to silo a user's data from others. </li>
-                    </ol>
-                    <p>This implementation ensures that data is properly validated, cleaned, and prepared for visualization processing in the later stages of the pipeline.</p>
-
-                  <div class="code-block">
-                <span class="code-keyword">class</span> <span class="code-function">DataSourceManager</span>:
-                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
-                        self.supported_formats = [<span class="code-string">'csv'</span>, <span class="code-string">'xlsx'</span>, <span class="code-string">'json'</span>]
-                        self.max_file_size = 50 * 1024 * 1024  <span class="code-comment"># 50MB limit</span>
-                        self.processed_files = {}
-
-                    <span class="code-keyword">def</span> <span class="code-function">validate_file</span>(self, file):
-                        <span class="code-comment"># File validation function</span>
-                        <span class="code-keyword">pass</span>
-
-                    <span class="code-keyword">def</span> <span class="code-function">process_upload</span>(self, file):
-                        <span class="code-comment"># First validate the uploaded file &rarr; bullet 1 above.</span>
-                        if not self.validate_file(file):
-                            <span class="code-keyword">raise</span> ValueError(<span class="code-string">"Invalid file format or size"</span>)
-
-                        <span class="code-comment"># Extract file extension and prepare appropriate reader</span>
-                        file_type = file.filename.split(<span class="code-string">'.'</span>)[-1]
-
-                        <span class="code-keyword">try</span>:
-                            <span class="code-keyword">if</span> file_type == <span class="code-string">'csv'</span>:
-                                df = pd.read_csv(file)
-                            <span class="code-keyword">elif</span> file_type == <span class="code-string">'xlsx'</span>:
-                                df = pd.read_excel(file)
-                            <span class="code-keyword">elif</span> file_type == <span class="code-string">'json'</span>:
-                                df = pd.read_json(file)
-
-                            <span class="code-comment"># Perform initial data cleaning</span>
-                            df = self._clean_data(df)
-
-                            <span class="code-comment"># Infer and validate data types. I need to understand if this will cause major problems or not.</span>
-                            df = self._infer_datatypes(df)
-
-                            <span class="code-comment"># Calculate the fill rate for each column. I don't care what anyone says,
-                                #this is an important metric for your data...</span>
-                            df = self._col_fill_rates(df)
-
-                            <span class="code-comment"># Generate metadata about the dataset</span>
-                            metadata = {
-                                <span class="code-string">'columns'</span>: df.columns.tolist(),
-                                <span class="code-string">'row_count'</span>: len(df),
-                                <span class="code-string">'data_types'</span>: df.dtypes.to_dict(),
-                                <span class="code-string">'column_fill_rates</span>: self._col_fill_rates(df),
-                                <span class="code-string">'processed_date'</span>: datetime.now()
-                            }
-
-                            <span class="code-comment"># Store processed data and metadata</span>
-                            file_id = str(uuid.uuid4())
-                            self.processed_files[file_id] = {
-                                <span class="code-string">'data'</span>: df,
-                                <span class="code-string">'metadata'</span>: metadata
-                            }
-
-                            <span class="code-keyword">return</span> file_id, metadata
-
-                        <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
-                            <span class="code-keyword">raise</span> ProcessingError(<span class="code-string">f"Error processing file: {str(e)}"</span>)
-
-                    <span class="code-keyword">def</span> <span class="code-function">_clean_data</span>(self, df):
-                        <span class="code-comment"># Remove dupes</span>
-                        df = df.drop_duplicates()
-                        <span class="code-comment"># Handle blank or missing values</span>
-                        df = df.fillna(method=<span class="code-string">'ffill'</span>)
-                        <span class="code-keyword">return</span> df
-
-                    <span class="code-keyword">def</span> <span class="code-function">_infer_datatypes</span>(self, df):
-                        <span class="code-comment"># Convert string date types to datetime. Need to make sure if there are
-                        # timestamps, maybe break up date and time portions as well as retaining full timestamp value in separate columns.</span>
-                        <span class="code-comment"># Detect numeric columns (float or int)</span>
-                        <span class="code-comment"># Identify categorical variables</span>
-                        <span class="code-keyword">return</span> df
-
-                    <span class="code-keyword">def</span> <span class="code-function">connect_to_database</span>(self, connection_string):
-                        <span class="code-comment"># Implementation for database connection. Connect to AWS</span>
-                        <span class="code-keyword">pass</span></div>
-                        </div>
-        <div id="dataprocessing-module" class="subsection">
-            <h3>2.2 Data Processing Module</h3>
-            <p>The data processing module will handle importing the data from S3, get the column data statistics (I know I did
-            column fill rate above, but I want to add other stats here), data filtering and data aggregation.</p>
-                <div class="code-block">
-                <span class="code-keyword">class</span> <span class="code-function">DataProcessor</span>:
-                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
-                        self.data = self.load_data(data_source)
-                        self.available_cols = self.get_column_metadata()
-
-                    <span class="code-keyword">def</span> <span class="code-function">load_data</span>(self, source):
-                        <span class="code-comment"># import data from storage source</span>
-                        <span class="code-keyword">pass</span>
-
-                   <span class="code-keyword">def</span> <span class="code-function">get_column_metadata</span>(self):
-                        <span class="code-comment"># col stats analysis</span>
-                        <span class="code-keyword">pass</span>
-
-                   <span class="code-keyword">def</span> <span class="code-function">filter_data</span>(self, conditions):
-                        <span class="code-comment"># filter on desired conditions</span>
-                        <span class="code-keyword">pass</span>
-
-                   <span class="code-keyword">def</span> <span class="code-function">agg_data</span>(self, groupby, metrics):
-                        <span class="code-comment"># data aggregation function</span>
-                        <span class="code-keyword">pass</span>
-                     </div>
+                    <h3>3.1 Data Source Management</h3>
+                    <p>This component handles the ingestion of portfolio data from users, supporting common file formats such as CSV and Excel.
+                It performs robust validation checks to ensure the uploaded files meet specified criteria for format, size, and structural integrity.
+                Key functionality includes metadata extraction (e.g., column names, data types, row counts, and completeness) and transformation of raw input
+                into a standardized format suitable for downstream processing. Additionally, this module allows integration of external datasets through API connectors,
+                enabling dynamic enrichment of user portfolios with live financial data. I have already tested the AlphaVantage
+                    API and as it has a basic free version, am inclined to use that for this project.</p>
                 </div>
-            <div id="dataviz-module" class="subsection">
-            <h3>2.3 Data Visualization Module</h3>
-                <p>This section will house all the data visualization generating code. I'll hard code in the chart types here
-                in the initialization and these will be available to the user through dropdown menus on th UI. I am thinking
-                timeseries, bar chart, scatter plot or pie chart (although I might not do pie chart, kinda hate those...)
-                </p>
-                <p>
-                <strong>One thing I am thinking about is adding a predictive forecasting model to this. So if the user loads in
-                timeseries sales data for example, if they have enough data (there will need to be a check for that), then they can
-                choose to generate a forecasting model. This would require more options and functions, but would be cool.</strong>
-                </p>
-                <p>
-                Also with timeseries data, I would like to implement the option of anomaly detection if there is a lot of volatile-ish
-                daily data for example, there could be a 7-day standard deviation bound that could show up as a shaded area on the plot as well
-                as an Isolation Forest algorithm that would outline single day outliers.</p>
-                <div class="code-block">
-                <span class="code-keyword">class</span> <span class="code-function">VizGen</span>:
-                    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
-                        self.supported_charts = {
-                            'time_series': self.gen_time_series,
-                            'bar_chart': self.gen_bar_chart,
-                            'scatter_plot': self.gen_scat_plot,
-                            'pie_chart': self.gen_pie
-                    }
-
-                <span class="code-keyword">def</span> <span class="code-function">gen_viz</span>(self, chart_type, data, options):
-                        <span class="code-comment"># generate chosen chart type with user chosen options</span>
-                        <span class="code-keyword">pass</span>
-                    </div>
+                <div id="dataprocessing-module" class="subsection">
+                    <h3>3.2 Data Processing Module</h3>
+                    <p>The data processing module performs detailed portfolio analysis to extract actionable insights.
+                It calculates key risk metrics such as beta (measures sensitivity to market movements), volatility (to understand variability in returns),
+                and diversification indices (to assess portfolio exposure). Additionally, the module supports filtering, aggregation, and normalization of data,
+                ensuring compatibility with visualizations and machine learning models. It incorporates advanced error handling to deal with inconsistencies or
+                missing values, and prepares the data for predictive analytics and visualization generation.</p>
+                </div>
+                <div id="dataviz-module" class="subsection">
+                    <h3>3.3 Data Visualization Module</h3>
+                    <p>This module generates interactive visualizations using the Plotly (probably) library to provide clear, intuitive insights into the user’s portfolio.
+                Supported visualizations include risk-return scatter plots, time series performance charts, and diversification breakdowns by sector or asset class.
+                Users can customize charts with filters, color schemes, and annotations (these features might go into reach goals). The visualization module also integrates predictive analytics,
+                such as forecasts of portfolio performance based on historical data and simulated stress tests to illustrate the impact of adverse market events.</p>
                 </div>
             </div>
         </section>
 
         <section id="database-schema" class="section">
-            <button class="collapsible"><h2>3. Database Schema</h2></button>
+            <button class="collapsible"><h2>4. Database Schema</h2></button>
             <div class="content">
-                <div class="subsection">
-
-                <p>
-                    I need to give this section really detailed thought and it will likely change as I iterate through
-                    the process (which has been my experience in the past anyway). So I quickly outlined some of the
-                    tables that I think might need to be created. I'd like to have a users table that retains user info,
-                    a data metadata table that would house information about the uploaded datasets, and a table that
-                    would house information about previously generated visualizations from datasets.
-                </p>
-                    <p>
-                        I'll say now that the users table will also have some kind of hashed password functionality as well.
-                        I didn't add it in yet because I'm not sure exactly how I want to do it yet. I know there's a pythonic
-                        way to do it and an AWS way to do it.
-                    </p>
-                <div id="user-table" class="subsection">
-                <h3>3.1 Users Table</h3>
-                <div class="code-block">
-                  <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">users</span> (
-                    <span class="sql-column">user_id</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
-                    <span class="sql-column">username</span> <span class="sql-type">VARCHAR</span>(50) <span class="sql-keyword">UNIQUE NOT NULL</span>,
-                    <span class="sql-column">email</span> <span class="sql-type">VARCHAR</span>(100) <span class="sql-keyword">UNIQUE NOT NULL</span>,
-                    <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
-                );</div>
-                </div>
-
-                <div id="metadata-table" class="subsection">
-                <h3>3.2 Data Metadata Table</h3>
-                <div class="code-block">
-                  <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">data_metadata</span> (
-                    <span class="sql-column">source_id</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
-                    <span class="sql-column">user_id</span> <span class="sql-type">INTEGER REFERENCES</span> users(user_id),
-                    <span class="sql-column">source_name</span> <span class="sql-type">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,
-                    <span class="sql-column">source_type</span> <span class="sql-type">VARCHAR</span>(20) <span class="sql-keyword">NOT NULL</span>,
-                    <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
-                );</div>
-                </div>
-
-                <div id="visualization-table" class="subsection">
-                <h3>3.3 Visualization Table</h3>
-                    <p>
-                        The thing I wanted to point out here is the <stong>viz_config</stong> JSONB field. This will house a JSON-formatted configuration for
-                        the chart that is getting saved. So it would have the type, colors, title, and x and y values (column names, not the actual values). Maybe
-                        more.
-                    </p>
-                 <div class="code-block">
-                  <span class="sql-keyword">CREATE TABLE</span> <span class="sql-table">visualizations</span> (
-                    <span class="sql-column">viz_id</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
-                    <span class="sql-column">source_id</span> <span class="sql-type">INTEGER REFERENCES</span> data_metadata(source_id),
-                    <span class="sql-column">viz_type</span> <span class="sql-type">VARCHAR</span>(50) <span class="sql-keyword">NOT NULL</span>,
-                    <span class="sql-column">viz_config</span> JSONB <span class="sql-keyword">NOT NULL</span>,
-                    <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-function">CURRENT_TIMESTAMP</span>
-                );</div>
-                </div>
-
-                </div>
-            </div>
-        </section>
-        <section id="api-endpoints" class="section">
-            <button class="collapsible"><h2>4. API Endpoints</h2></button>
-            <div class="content">
-                <div class="subsection">
-                    <p>
-                        For now what I can think of are endpoints that will upload the user's data, retrieve the user's data,
-                        create a visualization, and retrieve a previous viz. I am just outlining the flask routes I think
-                        I will need for this.
-                    </p>
-                <div id="data-source-management" class="subsection">
-                <h3>4.1 Data Source Management</h3>
-                <div class="code-block">
-                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/datasource/upload'</span>, methods=[<span class="code-string">'POST'</span>])
-                <span class="code-keyword">def</span> <span class="code-function">upload_datasource</span>():
-                    <span class="code-comment"># file upload endpoint</span>
-                    <span class="code-keyword">pass</span>
-
-                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/datasource/&lt;source_id&gt;'</span>, methods=[<span class="code-string">'GET'</span>])
-                <span class="code-keyword">def</span> <span class="code-function">get_datasource_metadata</span>(source_id):
-                    <span class="code-comment"># metadata retrieval</span>
-                    <span class="code-keyword">pass</span></div>
-                </div>
-                </div>
-                <div id="viz-management" class="subsection">
-                <h3>4.2 Viz Management</h3>
-                <div class="code-block">
-                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/visualization/create'</span>, methods=[<span class="code-string">'POST'</span>])
-                <span class="code-keyword">def</span> <span class="code-function">create_visualization</span>():
-                    <span class="code-comment"># viz creation</span>
-                    <span class="code-keyword">pass</span>
-
-                <span class="code-decorator">@app.route</span>(<span class="code-string">'/api/visualization/&lt;viz_id&gt;'</span>, methods=[<span class="code-string">'GET'</span>])
-                <span class="code-keyword">def</span> <span class="code-function">get_visualization</span>(viz_id):
-                    <span class="code-comment"># viz retrieval</span>
-                    <span class="code-keyword">pass</span></div>
-
-                </div>
-            </div>
-            </div>
-        </section>
-
-            <section id="predictive-analytics" class="section">
-                <button class="collapsible"><h2>5. Predictive Analytics</h2></button>
-                <div class="content">
-                    <div class="subsection">
-                        <p>
-                            This is going to be only available on timeseries data. I won't implement any other types of forecasting
-                            for this project to keep the project as a whole manageable.
-                        </p>
-                        <p>
-                            Honestly, I wrote down all of the forecsting methods I could think of and outlined all the different
-                            scenarios in which I think that they would be useful, but it may come down to only implementing 2 or so of
-                            them. If I had to pick two, I'd probably land on Prophet and ARIMA, but we'll see when we start implementing all
-                            of this.
-                        </p>
+                <p>Database schema includes tables for users, uploaded files, and analysis results:</p>
+                <ul>
+                    <li><strong>Users Table:</strong> User credentials and metadata</li>
+                    For example:
                      <div class="code-block">
-                <span class="code-keyword">class</span> <span class="code-function">TimeSeriesAnalyzer</span>:
-                    <span class="code-keyword">def</span> <span class="code-function">validate_data_quality</span>(self, df):
-                        <span class="code-comment"># Assess data characteristics for method selection, basically make sure the data is
-                        fit for predictive analysis.</span>
-                        <span class="code-comment"># Return data quality metrics and recommended forecasting method</span>
-                        pass
+<!--                        <pre>-->
+                            <code>
+                                -- Users Table
+                                CREATE TABLE users (
+                                    user_id SERIAL PRIMARY KEY,
+                                    first_name VARCHAR(50) NOT NULL,
+                                    last_name VARCHAR(50) NOT NULL,
+                                    email VARCHAR(100) UNIQUE NOT NULL,
+                                    password_hash TEXT NOT NULL,
+                                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                );
 
-                    <span class="code-keyword">def</span> <span class="code-function">select_forecasting_method</span>(self, data_quality_metrics):
-                        <span class="code-comment"># Choose appropriate forecasting method based on the above data characteristics</span>
-                        pass
+                                -- Portfolio Table
+                                CREATE TABLE portfolios (
+                                    portfolio_id SERIAL PRIMARY KEY,
+                                    user_id INT REFERENCES users(user_id),
+                                    portfolio_name VARCHAR(100) NOT NULL,
+                                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                );
 
-                    <span class="code-keyword">def</span> <span class="code-function">perform_forecast</span>(self, df, method, params):
-                        <span class="code-comment"># run chosen forecasting method with appropriate parameters</span>
-                        pass</div>
-                <div id="data-quality-assessment" class="subsection">
-                <h4>5.1 Data Quality Assessment</h4>
-                <ol class="hierarchical-list">
-                    <li><strong>Data Validation Checks</strong>
-                        <ul>
-                            <li>Time series length (minimum points needed). For basic statistical analysis, the data will need to
-                            have a min of 50 data points for reliable statistical inference. Playing it safer than the central limit theorem
-                            which is 30 minimum. Dependent on the type of forecasting model that is chosen, these values will vary.
-                            For seasonality data (yearly with like holiday sales etc.) it'll need to have at least three full cycles.
-                            Other methods like ARIMA will need like 100+ data points.</li>
-                            <li>Frequency consistency - what's the cadence of the timeseries data?</li>
-                            <li>Missing data percentage</li>
-                            <li>Outlier detection - will likely use Isolation Forest for this. </li>
-                            <li>Seasonality presence - will calculate the number of seasonality seasons are in the data.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Quality Metrics</strong>
-                        <ul>
-                            <li>Data completeness </li>
-                            <li>Regularity</li>
-                            <li>Noise level assessment - I'll use rolling averages to validate</li>
-                            <li>Trend strength measurement - I'll use a simple regression slope here.</li>
-                        </ul>
-                    </li>
-                </ol>
-                    </div>
-               <div id="method-select" class="subsection">
-                <h4>5.2 Method Selection Criteria</h4>
-                <ol class="hierarchical-list">
-                    <li><strong>ARIMA/SARIMA Recommended When:</strong>
-                        <ul>
-                            <li>Clean, regular data with few gaps</li>
-                            <li>Clear seasonal patterns</li>
-                            <li>Shorter-term forecasting needed</li>
-                            <li>High importance on statistical interpretation</li>
-                        </ul>
-                    </li>
-                    <li><strong>Prophet Recommended When:</strong>
-                        <ul>
-                            <li>Irregular or missing data present</li>
-                            <li>Multiple seasonality patterns</li>
-                            <li>Holiday effects need consideration</li>
-                            <li>Quick implementation needed</li>
-                        </ul>
-                    </li>
-                    <li><strong>LSTM/Neural Networks Recommended When: (might not go to this extent)</strong>
-                        <ul>
-                            <li>Large dataset available (1000+ points)</li>
-                            <li>Complex, non-linear patterns present</li>
-                            <li>Multiple features/variables available</li>
-                            <li>High computational resources available</li>
-                        </ul>
-                    </li>
-                    <li><strong>XGBoost/LightGBM Recommended When:</strong>
-                        <ul>
-                            <li>Medium to large datasets</li>
-                            <li>Multiple external features available</li>
-                            <li>Fast training/prediction required</li>
-                            <li>Handling irregular patterns needed</li>
-                        </ul>
-                    </li>
-                </ol>
-                </div>
-                <div id="implement-strat" class="subsection">
-                <h4>5.3 Implementation Strategy</h4>
-                <ol class="hierarchical-list">
-                    <li><strong>Core Components</strong>
-                        <ul>
-                            <li>Automate data quality assessment</li>
-                            <li>Method selection algorithm based on the results of the quality assessment</li>
-                            <li>Modular forecasting implementation</li>
-                            <li>Performance evaluation metrics - MAE, MSE, RMSE, Forecast error. maybe others?</li>
-                        </ul>
-                    </li>
-                    <li><strong>Required Dependencies</strong>
-                        <ul>
-                            <li>pandas & numpy: Data handling</li>
-                            <li>statsmodels: Statistical analysis</li>
-                            <li>scikit-learn: Model evaluation</li>
-                            <li>Additional packages based on selected methods</li>
-                        </ul>
-                    </li>
-                    <li><strong>Output Format</strong>
-                        <ul>
-                            <li>Forecast values with confidence intervals - going forward on the timeseries plot</li>
-                            <li>Model performance metrics</li>
-                            <li>Data quality report</li>
-                            <li>Method selection justification - based of original data quality</li>
-                        </ul>
-                    </li>
-                </ol>
-                    </div>
-                </div>
-                </div>
-            </section>
+                                -- Holdings Table
+                                CREATE TABLE holdings (
+                                    holding_id SERIAL PRIMARY KEY,
+                                    portfolio_id INT REFERENCES portfolios(portfolio_id),
+                                    security_name VARCHAR(100) NOT NULL,
+                                    allocation DECIMAL(10, 2) NOT NULL,
+                                    market_value DECIMAL(15, 2) NOT NULL,
+                                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                );
+                                        </code>
+<!--                                    </pre>-->
+                                </div>
 
-            <section id="error-handling" class="section">
-            <button class="collapsible"><h2>6. Error Handling</h2></button>
+                    <li><strong>Files Table:</strong> Stores uploaded portfolio details. This includes metadata about
+                    previously uploaded files such as filename, date uploaded, last opened etc.</li>
+                    <li><strong>Analysis Table:</strong> Stores results and visualizations. This will be used as almost
+                    a reminder to the user previous analyses they may have generated.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="api-endpoints" class="section">
+            <button class="collapsible"><h2>5. API Endpoints</h2></button>
             <div class="content">
-                <div class="subsection">
-                    <p>
-                        Since a lot of the user input is going to be chosen from dropdown menus, I am anticipating the
-                        error handling to be on things such as uploading, downloading datasets, connection to AWS, as
-                        well as data processing errors and invalid API requests. I honestly don't have to much else to
-                        write here except that there will be error handling when this gets implemented each section
-                        at a time.
+                <p>Core endpoints for user authentication, data upload, and visualization generation:</p>
+                <ul>
+                    <li><strong>POST /auth/signup:</strong> Register user</li>
+                    <li><strong>POST /auth/login:</strong> Authenticate user</li>
+                    <li><strong>POST /api/upload:</strong> Upload portfolio</li>
+                    <li><strong>GET /api/dashboard:</strong> Retrieve user-specific data</li>
+                </ul>
+                There are several APIs that I will probably eventually use in this program, but I am going to
+                start with real-time market data from AlphaVantage, of which I have already obtained an API key
+                and tested pulling data. There are additional APIs such as YahooFinance, Quandl, Finnhub, and FRED.
 
-                    </p>
+            </div>
+        </section>
 
-                </div>
+        <section id="predictive-analytics" class="section">
+            <button class="collapsible"><h2>6. Predictive Analytics and Other Models</h2></button>
+            <div class="content">
+                <p>
+                    The Predictive Analytics module provides advanced forecasting and analysis capabilities to enhance
+                    portfolio insights and risk management. This module leverages a combination of statistical and
+                    machine learning models to extract actionable insights from historical data, enabling users to
+                    anticipate market trends, detect anomalies, and make data-driven decisions.
+                </p>
+                <h3>6.1 Time-Series Forecasting Models</h3>
+                <p>
+                    Forecasting future trends and portfolio performance relies on robust time-series models.
+                    This platform integrates:
+                </p>
+                <ul>
+                    <li>
+                        <strong>ARIMA (AutoRegressive Integrated Moving Average):</strong>
+                        A classical statistical model that is effective for short- to medium-term forecasts of
+                        stationary time-series data. It is ideal for datasets with clear seasonal patterns and stable
+                        trends.
+                    </li>
+                    <li>
+                        <strong>Prophet:</strong>
+                        Developed by Facebook, Prophet is designed for handling irregular or missing data, multiple
+                        seasonality patterns, and holiday effects. Its ease of use and interpretability make it a strong
+                        choice for business-oriented forecasts.
+                    </li>
+                </ul>
+
+                <h3>6.2 Anomaly Detection</h3>
+                <p>
+                    The system integrates anomaly detection to identify unusual events or data points that may indicate
+                    market risks or opportunities. Algorithms include:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Isolation Forest:</strong> Efficiently identifies outliers in large datasets by
+                        isolating anomalies using random decision trees. This is particularly useful for detecting
+                        irregularities in portfolio performance. I have already implemented this feature in a data
+                        pipeline I built out for real-time data monitoring at my previous company.
+                    </li>
+                    <li>
+                        <strong>Z-Score and Rolling Averages:</strong> Also developed a lot of this in different contexts
+                        at my previous company. This combines statistical techniques to highlight
+                        data points that deviate significantly from rolling averages, aiding in early detection of
+                        market anomalies.
+                    </li>
+                    The combination of these two methods will help to inform on rolling, slowly drifting trends as well
+                    as daily outliers.
+                </ul>
+
+                <h3>6.3 Risk Metric Predictions</h3>
+                <p>
+                    Predictive models provide insights into key risk metrics, enabling users to assess potential
+                    portfolio vulnerabilities. This includes:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Volatility Forecasting:</strong> Using models like GARCH (Generalized Autoregressive
+                        Conditional Heteroskedasticity) to predict future price volatility based on historical trends.
+                    </li>
+                    <li>
+                        <strong>Beta Prediction:</strong> Estimating changes in portfolio sensitivity to market
+                        movements using regression-based approaches.
+                    </li>
+                </ul>
+
+                <h3>6.4 Portfolio Optimization</h3>
+                <p>
+                    The platform incorporates portfolio optimization techniques to suggest adjustments for minimizing
+                    risk and maximizing returns. Key methods include:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Mean-Variance Optimization:</strong> A foundational method that uses historical returns
+                        and covariances to construct the optimal risk-return portfolio.
+                    </li>
+                    <li>
+                        <strong>Monte Carlo Simulation:</strong> Simulates a wide range of possible portfolio outcomes
+                        based on probabilistic inputs, providing a detailed risk analysis.
+                    </li>
+                </ul>
+
+                <h3>6.5 Sentiment Analysis (Reach Goal)</h3>
+                <p>
+                    Incorporates sentiment analysis to evaluate market mood and predict its potential impact on
+                    portfolios. This feature utilizes:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Natural Language Processing (NLP):</strong> Processes financial news and analyst
+                        opinions to generate sentiment scores.
+                    </li>
+                    <li>
+                        <strong>Sentiment Indexing:</strong> Correlates sentiment data with portfolio performance,
+                        allowing users to align strategies with market conditions.
+                    </li>
+                </ul>
+
+                <h3>6.6 Integration of External Factors (Reach Goal)</h3>
+                <p>
+                    Predictive models integrate external macroeconomic and alternative data to enhance forecasts and
+                    provide a comprehensive view of portfolio risks:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Macroeconomic Indicators:</strong> Uses FRED data for factors like interest rates,
+                        GDP growth, and inflation to contextualize portfolio performance.
+                    </li>
+                    <li>
+                        <strong>Alternative Data Sources:</strong> Incorporates datasets like ESG metrics (Environmental,
+                        Social and Governments metrics),
+                        sentiment data, or geopolitical events for deeper analysis.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="error-handling" class="section">
+            <button class="collapsible"><h2>7. Error Handling</h2></button>
+            <div class="content">
+                <p>Includes input validation, API error responses, and fallback mechanisms for failed requests.
+                <ul>
+                <li>Input Validation will ensure users upload correct data files with processable data. Correct formats
+                for this project specifically will include csv and Excel files. </li>
+                <li>API error handling will ensure correct data retrieval from the APIs. Since I am using the free
+                AlphaVantage package for this porject, I will have to implement timing restrictions since you can't just
+                scrape their API as many times and as often as you want. I will implement messages to inform users
+                based on successful or failure from API calls. </li>
+                <li>Database error handling will include messages to the user on any information attempting to go
+                in the database that doesn't fit the schema or isn't supported. </li>
+                <li>File processing fallbacks will prevent crashes during heavy computations or file uploads</li>
+                <li>Implement clear user-friendly error messages to the frontend to help debug issues efficiently.
+                Will also log errors on the backend for easier debugging.</li>
+            </ul>
+                </p>
             </div>
         </section>
 
         <section id="security" class="section">
-            <button class="collapsible"><h2>7. Security Considerations</h2></button>
+            <button class="collapsible"><h2>8. Security Considerations</h2></button>
             <div class="content">
-                <div class="subsection">
-                    <p>
-                        So, I have been thinking about this a lot. And since we would be (in a commercial environment) be
-                        dealing with people's proprietary data, and data security and data governance need to be at the
-                        forefront of an organization that utilizes data, these considerations are very serious.
-                        I have essentially chosen AWS S3 for this reason. Using locally saved data I think might be good
-                        enough for this project, I know that AWS automatically encrypts all data uploaded to S3 and keeps
-                        it safe. Another reason for choosing S3 that isn't security related is scalability.
-
-                    </p>
-
-                </div>
+                <p>My focus is on AWS S3 for secure file storage and JWT for user authentication. I'm going to be dealing
+                with financial data, even though a lot of it will be open-source, publicly available data, I want users
+                to be able to upload their own portfolio positions and that needs to be kept secure. I need to ensure
+                secure sessions for each user and secure data storage, which is why I am choosing AWS S3 as my storage
+                option.</p>
             </div>
         </section>
 
         <section id="testing" class="section">
-            <button class="collapsible"><h2>8. Testing Strategy</h2></button>
+            <button class="collapsible"><h2>9. Testing Strategy</h2></button>
             <div class="content">
-                <div class="subsection">
-                    <p>
-                        For testing, I plan to begin by running data that is saved locally, writing test modules that will
-                        execute specific functionality of the data. I'll build the UI first, and then test and iterate
-                        each functionality as I add it.
-                    </p>
-                    <p>
-                        After I get the UI and some basic data plotting, then I will test the predicitve analytics portion
-                        of the project. I want to write unit tests that will test various cases and I will also try and
-                        provide data and requests that will break it to ensure robustness.
-                    </p>
-                    <p>
-                        Lastly I will implement database and data storage connections. These will also have their own unit tests
-                        that I will be able to run.
-                    </p>
-
-                </div>
+                <p>
+                For a lot of the scenarios listed below, I will create unit tests to test as many features as I can
+                in an isolated environment.
+                <ol>
+                <li><strong>User Authentication:</strong>Create new user and ensure that user gets added to the database.
+                Login with valid credentials. Confirm redirect to user-specific dashboard. Try logging in with invalid
+                credentials and ensure an error message pops up and no routing happens. Try signing up with invalid
+                values and ensure error messages pop up. Log out from dashboard and ensure access to protected routes
+                are inaccessible until re-login.</li>
+                <li><strong>File Uploads:</strong>Upload csv and Excel files. Ensure file is uploaded and metadata is
+                displayed. Try uploading file with unsupported format and confirm error message. Try to upload file
+                that exceeds file size limits and observe error messages and file is rejected gracefully. Delete a
+                previously uploaded file and ensure removal from database. </li>
+                <li><strong>Data Processing:</strong>Upload valid portfolio file. Verify beta and risk metrics are
+                calculated accurately. Upload a file missing or inconsistent data and ensure appropriate error handling.
+                Modify portfoliio data on frontend and ensure risk metrics are reflected and saved to database.</li>
+                <li><strong>Visualization Generation:</strong>Generate time series visualization of risk metrics. Apply
+                forecast metrics and ensure the values and confidence levels are displayed accurately. Verify the
+                correct chart type is generated for the appropriate data (timeseries for well, timeseries data, pie
+                charts for asset allotment etc.)</li>
+                <li><strong>API Integration:</strong>This will be a big one I think because as with a lot of the APIs
+                I have worked with in the past, there are a lot of issues that can go wrong that are out of my control
+                and the best I can do is create proper error handling to handle any kind of thing that might pop up.
+                Test the pull of individual stock data and ensure it displays properly on the dashboard. Try and
+                simulate API outages and hitting rate limits and ensure errors are handled appropriately.</li>
+                <li><strong>Portfolio Analysis:</strong>Analyze a portfolio with overlapping assets and verify that
+                the results are displayed accurately. Test stress-testing scenarios for specific market conditions
+                such as overall drops or interest rate increases/decrease etc.</li>
+                <li><strong>Data Persistence:</strong>Create a portfolio, log out, log back in and ensure all the info
+                is still there and accurate. Create a portfolio, log out, log in as another user and create another
+                portfolio, log out, log back in as first user and ensure all user dashboards are inaccessible from
+                other users and dats persists. Delete a portfolio and ensure it is removed from the database.</li>
+            </ol></p>
             </div>
         </section>
 
-                <section id="deployment" class="section">
-            <button class="collapsible"><h2>9. Deployment</h2></button>
+        <section id="deployment" class="section">
+            <button class="collapsible"><h2>10. Deployment Configuration</h2></button>
             <div class="content">
-                <div class="subsection">
-                    <p>
-                        My thoughts as I sit and type this out this evening, is that I will deploy this on github pages
-                        as a web app. The user will be able to login, load a datasource, and then go through guided steps
-                        to generate a plot of their data with explanations.
-                    </p>
-
-                </div>
+                <p>The deployment strategy leverages Netlify for the frontend and GitHub for code management, providing a seamless and automated deployment pipeline. The backend services will be hosted on AWS to ensure scalability, reliability, and efficient data processing capabilities.</p>
+                <ul>
+                    <li><strong>Frontend:</strong> The user-facing components of the application will be deployed on
+                        Netlify. This approach simplifies continuous integration by linking my GitHub repo
+                        to Netlify, allowing automatic updates whenever new code is pushed. I chose this because
+                        I am already hosting a website that will be associated with the project there. </li>
+                    <li><strong>Backend:</strong> The backend Flask application will be deployed on an AWS EC2 instance
+                        or a containerized solution such as AWS Fargate (after I do a scalability and cost analysis on
+                        these options). This ensures that APIs and data processing  modules are available 24/7 with
+                        robust performance under varying loads.</li>
+                    <li><strong>Data Storage:</strong> User-uploaded data and metadata will be stored in AWS S3,
+                        offering secure and scalable storage. AWS RDS (PostgreSQL) will handle the relational database
+                        needs for user data, portfolio information, and application metadata. I'm using SQLite for
+                        development.</li>
+                    <li><strong>Domain Integration:</strong> My existing domain that is hosted on Netlify will link to
+                        the backend via API calls, maintaining a cohesive user experience.</li>
+                    <li><strong>Security:</strong> Secure HTTPS connections will be enforced for all communications.
+                        AWS IAM roles and policies will control access to S3 and RDS, ensuring that user data is
+                        protected. <- This is super important.</li>
+                </ul>
+                <p>This configuration balances ease of use, cost efficiency, and scalability, ensuring the platform is
+                    production-ready and capable of supporting future growth.</p>
             </div>
         </section>
 
-        <section id="goals" class="section">
-            <button class="collapsible"><h2>10. Reach Goals</h2></button>
+
+<section id="goals" class="section">
+    <button class="collapsible"><h2>11. Reach Goals</h2></button>
+    <div class="content">
+        <ul>
+            <li>
+                <strong>Real-time data streaming:</strong> Implement functionality to ingest and process real-time
+                financial data streams, such as stock prices, portfolio changes, and market trends. This could leverage
+                APIs like Alpaca, Polygon.io, or IEX Cloud, and use WebSocket or streaming frameworks like Apache Kafka
+                to ensure live updates for users. Real-time streaming would enable dynamic dashboards that adjust
+                instantly as new data is received. I consider this a reach goal mainly because the cost associated with
+                it is high enough that I would need market adoption and validation to integrate this.
+            </li>
+            <li>
+                <strong>Integration with external APIs for live market updates:</strong> Expand the platform’s
+                functionality by incorporating live data from APIs such as Alpha Vantage, Quandl, or Yahoo Finance.
+                This integration would allow users to overlay real-time market updates, economic indicators, or
+                global risk factors onto their portfolio analyses, offering deeper insights and proactive
+                decision-making capabilities. Also cost restrictive at the moment for the same reason as above.
+            </li>
+            <li>
+                <strong>Advanced risk visualizations with custom charting libraries:</strong> Introduce sophisticated
+                risk analysis tools such as Monte Carlo simulations, VaR (Value at Risk) visualizations, and
+                stress-testing charts. Use advanced charting libraries like D3.js or Plotly for highly interactive,
+                customizable visuals. These visualizations could include risk exposure by asset class, geographical
+                heatmaps of portfolio distribution (which I personally think is really cool), or time-series
+                comparisons of projected vs. actual performance.
+            </li>
+            <li>
+                <strong>Automated Reporting:</strong> Allow the user to be able to create dashboards and reports, and
+                then be able to get updated reports with automated summaries on a cadence of their choosing, whether it
+                be the start of every quarter, every Friday, whatever. Whatever they want. They will also have the
+                ability to go in and make changes to reports and those changes will be immediately reflected in the
+                reports that are automatically delivered.
+            </li>
+        </ul>
+        <p>
+            These reach goals are designed to elevate the platform from a basic portfolio analysis tool to a
+            comprehensive, cutting-edge solution for financial risk management. While not part of the core MVP,
+            they represent areas for future development that could significantly enhance user value and market
+            differentiation.
+        </p>
+    </div>
+</section>
+
+
+        <section id="timeline" class="section">
+            <button class="collapsible"><h2>12. Implementation Timeline</h2></button>
             <div class="content">
-                <div class="subsection">
-               <strong>Advanced Analytics</strong>
-                    <p>
-                    There are several things I could do here to give this application the ability to
-                    have more advanced analytical features. One feature would be adding in anomaly detection like what
-                    I showed in the competency demo where an Isolation Forest algorithm was used on timeseries data as
-                    well as 2 standard deviation bars on a 7 day rolling window. Another aspect could be the
-                    implementation of confidence interval visualizations. I'd love to implement that into the
-                    forecasting out of the gate, but I putting it here in the reach goals as I am not quite sure what
-                    the lift for that feature would be yet. And lastly I think an automated seasonality detection
-                    algorithm would be a cool feature as well. This would give the user more automated insights into
-                    their data that maybe they hadn't realized just by plotting basic plots.
-                    </p>
-
-                    <strong>User Experience Enhancements</strong>
-                    <p>
-                        There are probably too many things that could be listed under this category, but I believe that
-                        for an application like this, and is actually my main goal for this project, is to keep this
-                        simple. Keep it easy for the user, keep it streamlined, concise and only produce plots or
-                        functions of value. That being said, these are some functionality improvement ideas that I had that I
-                        believe a user would find useful. Interactive visualization customization. This is a pretty far-
-                        reach goal I think, but be able to let the user drag and drop fields into a plotting area would
-                        be really cool. Another one would be dashboard creation, saving and exporting into multiple
-                        formats. Also in the future customizable reporting templates would be great. I started this
-                        project with the idea of this being used within sales organizations for their salesforce to
-                        track benchmarks, goals and quotas. But this could easily be expanded to many other areas,
-                        data quality reporting, dashboards for the medical field, supply chain, education systems,
-                        reatil, e-commerce etc.
-                    </p>
-
-                   <strong>Integration Features</strong>
-                        <p>
-                            Some of these features are planned features for the commercial product I want to create,
-                            although for this project would definitely be considered a reach goal. Some
-                            integration features that I would love to implement are real-time data streaming capability,
-                            the ability to export to various platforms like Power BI or Tableau, and automated analytics
-                            scheduling. The automated scheduling would be a big needle-mover for a lot of organizations
-                            I have spoken with already. They would love the functionality to build a dashboard and then
-                            have that dashboard automatically updated and sent in an email to a predetermined
-                            recipient list on a predetermined cadence.
-                        </p>
-                    <strong>Advanced Infrastructure</strong>
-                    <p>
-                        Lastly I think some more advanced infrastructure like caching for faster analysis (this has
-                        proven to be slightly difficult in the past), parallel processing like Dask and PySpark for
-                        large dataset processing as well as an automated back up system, but why wouldn't you back
-                        things up?
-                    </p>
-                </div>
+                <ul>
+                    <li><strong>Jan 20:</strong> Authentication and database setup</li>
+                    <li><strong>Feb 10:</strong> File upload and basic risk metrics</li>
+                    <li><strong>Mar 1:</strong> Advanced visualizations</li>
+                    <li><strong>Mar 20:</strong> Predictive analytics</li>
+                    <li><strong>Apr 15:</strong> Testing and deployment</li>
+                </ul>
             </div>
         </section>
-
-                <section id="timeline" class="section">
-            <button class="collapsible"><h2>11. Implementation Timeline</h2></button>
-            <div class="content">
-                <div class="subsection">
-                    <ul>
-                        <li>By Week of <strong>01/20:</strong> Have basic Flask structure set up and have user authentication
-                        set up.</li>
-                        <li>By Week of <strong>02/03:</strong> Finish the database schema and the basic file upload
-                            functionality, including the data metadata.</li>
-                        <li>By Week of <strong>02/17:</strong> Have data validation and cleaning functions implemented
-                            and build the data quality assessment module. Create basic data visualization templates
-                        and set up API endpoints for data retrieval.</li>
-                        <li>By Week of <strong>03/03:</strong> :( Have timeseries analysis components implemented.
-                        Create visualization generation system and performance metrics calculations.</li>
-                        <li>By Week of <strong>03/17:</strong> Build forecasting model selection logic.</li>
-                        <li>By Week of <strong>03/31:</strong> Work on frontend improvements, comprehensive error
-                        handling.</li>
-                        <li>By Week of <strong>04/28:</strong> April will be dedicated to continual testing, reach
-                        goals if there is time and building the final presentation.</li>
-
-
-                    </ul>
-
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer>
