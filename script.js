@@ -198,3 +198,36 @@ function addEntry(week, date, content) {
     weeklyEntries.push({ week, date, content });
     displayEntries(); // Refresh the display
 }
+
+function extractDocuments() {
+    const documentList = document.getElementById('document-list');
+    documentList.innerHTML = ''; // Clear any existing list
+
+    const links = weeklyEntries
+        .flatMap(entry => entry.content) // Flatten all content arrays
+        .filter(item => item.type === "text" && item.value.includes('<a href="')) // Filter for links
+        .flatMap(item => {
+            // Extract links from HTML strings
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = item.value;
+            return Array.from(tempDiv.querySelectorAll('a')).map(link => ({
+                text: link.textContent,
+                href: link.href
+            }));
+        });
+
+    links.forEach(link => {
+        const listItem = document.createElement('li');
+        const anchor = document.createElement('a');
+        anchor.href = link.href;
+        anchor.target = '_blank';
+        anchor.textContent = link.text;
+        listItem.appendChild(anchor);
+        documentList.appendChild(listItem);
+    });
+}
+
+window.onload = function () {
+    displayEntries();
+    extractDocuments(); // Populate the document list on load
+};
