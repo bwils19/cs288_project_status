@@ -157,6 +157,34 @@ const weeklyEntries = [
             login and signup page sorted out and get the user info saved to a sqlite database. Also, we'll see what Marty says in the group meeting this afternoon. 
             </p>`}
         ]
+    },
+                       {
+        week: 12,
+        date: "2025-01-13",
+        content: [
+            { type: "text", value: `<p>Back from break. I did a lot on this project over the holidays. I spoke to several people in the industry including a consultant that used to work for Wellington, a
+            Portfolio Manager for Wellington and the Global Head of Pricing at Apollo Management. They all gave me some hope and inspiration that I am going down a promising (albeit rather competitve) path. 
+            That's ok, I can do it. They all gave me what I was looking for though, which was a bit of a direction in what the needs are and what the weaknesses in the current products are. The Apollo
+            Management guy has all the resources in the world so they use Aladdin which I am not trying to compete with. I am trying to compete with the SMB to mid-market guys. The firms that don't have 
+            the money to spend on a huge robust piece of software like that. So to focus on core capabilities and keep it accessible is my goal for now here. </p>
+            <p> What I have accomplished to date is getting the login page, signup page and portfolio overview pages in a good spot. Someone can create a user, log in with their credentials, and then 
+            be taken to their own portfolio overview page. From there they can upload either a csv, xlsx, or txt file of securities they own and the amount they own and the purchase date. If they provide
+            more like sector, current price or notes, those will get added as well, but not required because i can grab sector from an API. </p>
+            <p> One of the cooler things I think that I implemented was the that when a user uploads a file, there is a preview of the file that show all the valid and invalid values. I also implemented a 
+            smart algorithm that will infer column names if the column names aren't obvious. It uses ratios of the values of the columns to infer the type of column. For example ticker values are usually
+            only 1 - 4 characters long and uppercase. So it will get the ratio of values in the column that meet the uppercase ratio, string_length ratio and unique values ratio (they should all be 
+            unique). Then set scoring logic for the ratio like this: <br>
+            'ticker': (features['uppercase_ratio'] > 0.8 and <br>
+                   features['string_length_mean'] < 5 and <br>
+                   features['unique_ratio'] > 0.1), <br>
+                   It also sees it if can covert values to valid dates, gets the number of values in the columns that are numeric etc. I also have a list of hard-coded possibilities
+            that the column names could be, so it checks those as well. For example, the ticker column could be named ['ticker', 'symbol', 'stock', 'security', 'ticker symbol', 'stock symbol', 'securities', 
+            'asset']. If a user uploads a file with invalid values for a required column they will see that in a data preview display and can edit in place.</p>
+            <p> The user can also build a portfolio manually by searching for securities manually and adding them to a portfolio. A user can also edit a portfolio that they have already created by adding, 
+            deleting or adjusting the value owned. All of the portfolios the user creates are displayed on their own cards on the portfolio overview page. There is a button on each portfolio card where the 
+            user can build the risk analysis dashboard which is the implementation that is coming next. 
+            </p>`}
+        ]
     }
 ];
 
