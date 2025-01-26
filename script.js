@@ -185,7 +185,25 @@ const weeklyEntries = [
             user can build the risk analysis dashboard which is the implementation that is coming next. 
             </p>`}
         ]
-    }
+    },
+    {
+        week: 13,
+        date: "2024-01-20",
+        content: [
+            { type: "text", value: `<p>This was a heavy week of testing and debugging. I kept going to implement the risk calculations, but as I was going to use a portfolio uploaded by the user I kept 
+            noticing weird things happening in the functionality affecting the usability of the program. One example, when the user uploads a portfolio and saves it, a popup appeared on top of another 
+            popup. The top one said "Portfolio name is required" while the popup that it was covering was the popup for the user to name the portfolio. So there was some debugging there to work out 
+            when the the warning popup should be shown and its prescidence. Another thing I noticed was that sometimes when I stopped the flask app (ctrl-c the python script) and then restarted, I could 
+            reload the portfolio overview page, which is a pretty big security deal. I fixed that, but what I inadvertantly did was fix it so that anytime I refresh the page it would take me to the login
+            which isn't what I wanted either. I got that worked out and incorporated a 2 hour timeout period where the app will make you re-login after 2 hours.</p>
+            <p> One thing I need to fix still is a check when a user edits an uploaded file that has an invalid ticker and a valid name, if they edit the ticker there needs to be a validation check and 
+            an alert to the user to make sure the ticker and company name match up. Because right now there is no check so there can be a record with a ticker and company name that are completely different
+            securities. The data gets pulled from the API using the ticker, but there needs to be a check there.</p>
+            <p>Another thing I need to fix is the Total gains calculations. I kind of have a placeholder in there for now and it needs to be calculated based on the purchase date I think and that logic is 
+            not yet implemented. 
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
