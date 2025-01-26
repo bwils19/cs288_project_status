@@ -200,7 +200,9 @@ const weeklyEntries = [
             an alert to the user to make sure the ticker and company name match up. Because right now there is no check so there can be a record with a ticker and company name that are completely different
             securities. The data gets pulled from the API using the ticker, but there needs to be a check there.</p>
             <p>Another thing I need to fix is the Total gains calculations. I kind of have a placeholder in there for now and it needs to be calculated based on the purchase date I think and that logic is 
-            not yet implemented. 
+            not yet implemented. </p>
+            <p> I also started this bug log that also is going to act as my list of features and imporvements because I keep thinking of things and don't want to forget them.
+            <strong><a href="https://docs.google.com/document/d/1kSbRt9e3G2ua4pRtm7li71dE-jKrKJA1ragt_KJhukI/edit?tab=t.0" target="_blank">Error and Feature Additions Log</a>
             </p>`}
         ]
     },
