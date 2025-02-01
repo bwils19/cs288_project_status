@@ -206,6 +206,29 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+        {
+        week: 14,
+        date: "2024-01-27",
+        content: [
+            { type: "text", value: `<p>I submitted my Proof of Concept Demo this week as well as demonstrated what I have so far in the meeting on Thursday. I feel that I have made decent progress so far. 
+            There are a few bugs that need working out (indicated in the in the bug log from last week). One of the main things I need to do is figure out the VaR, beta and credit calculations. These 
+            calculations can be calculated several different ways I need to be clear on which way I do it so that the users know exactly what the values are telling them. For example, the "Total Market"
+            value is used in beta calculations, which is the tendency of stocks to move more or less than the market. But that isn't just the S&P or something, it's EVERYTHING. Which is a difficult thing 
+            to gather. Even there are different strategies for calculating beta, the clear point is that beta, as usually measured, is not a substitute for brains and cannot be relied on as a simple 
+            predictor of long-run future returns. Users can use it as a kind of guide, but should be presented in that way</p>
+            <p> The main thing I am going to focus on in the coming week is the format and layout of the Risk Analysis page. What I want to achieve with this page, as it is the meat of this project and of 
+            this product in general, is a structure that provides immediate, concise valuable information to the user. Then allows the user to drill down at any aspect they choose. So with that said, I plan
+            to have an "Executive Summary" at the top of the page. This shows the high-level metrics grid; Portfolio Value, Normal VaR, Stress VaR, and Beta (beta will be a placeholder for now). I would 
+            like to put a line or short text about any anomaly or concentration alert. The middle section will be "Primary Charts" which will contain the VaR bar or distribution chart, a risk component
+            bubble chart and a market regime doughnut. I want there to be an expandable lower section that is "Details and Drill Downs" which could have a table by security or sector (or both!) and possibly
+            a historical or advanced scenario analysis if I can obtain the data and the info I need. Throughout this page I think it would be cool to have modal pop-ups that can offer details with 
+            deeper stats or mini-charts for security.</p>
+            <p> One other thing I did some research on this week is I could, for a relatively low cost, implement an LLM "Explain" button at any point on this page and the user could interact with the LLM
+            about their data and ask questions and get immediate feedback. This is going to get added to my "Reach goals" list for this project, although I'll definitely put it in the product long term. The 
+            other reach goal I want to add is push alerts or email alerts with a summary of the day's risk changes or anomalies. 
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
