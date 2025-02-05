@@ -229,6 +229,27 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+    {
+        week: 15,
+        date: "2024-02-03",
+        content: [
+            { type: "text", value: `<p>This week is going to be focused on getting the most up-to-date data from the API, ensuring that that data gets saved to the stock_cache table I have built, and then
+            when a user loads a portfolio, it will update from the table instead of pulling for every security from the API every time they load. This functionality is in place now, just needs to be 
+            debugged a bit. I also want to add a footnote to every page that gives the latest time stamp that data was updated. Just a small little line of text on the bottom right corner of the page that
+            says "Last Update: 2025-02-05 10:52:34".</p>
+            <p> This is also critical in the risk calculations. You definitely want the most up-to-date data when doing the risk calculations. I plan to implement some kind of parallel processing to make the
+            entire process fast and seamless although I still need to do some research on the best way to handle this.</p>
+            <p> I have also been making my way through my error log list. Still have more to do and new ones keep popping up.</p>
+            <p>To summarize, the goals for this week:
+                <ul>
+                    <li>Ensure the API security updates and stock_cache table updating is working correctly.</li>
+                    <li>Add a "Last Update" timestamp to all pages showing market prices.</li>
+                    <li>Get through current errors in the error log.</li>
+                    <li>Decide on a parallel processing strategy for API updating and calculating risk metrics.</li>
+                </ul>
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
