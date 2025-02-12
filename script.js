@@ -250,6 +250,27 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+        {
+        week: 16,
+        date: "2024-02-10",
+        content: [
+            { type: "text", value: `<p>This week I still need to finish most of the tasks from last week as I wasn't fully able to finish them. I did however improve the skeleton of the risk analysis page. I 
+            added top cards that have the top-level, most important values like the portfolio value, the VaR value, the stress VaR value and the beta value, although the actual values are placeholders for the 
+            moment because I need to ensure that the historical assest data is getting pulled correctly and getting saved to the database. Then we need to use that historical data to make these caluculations. 
+            Under those top-level numbers, I added charts that show in detail the VaR analysis which is a bar chart that shows the comparison between the normal VaR (95%) confidence, the stress VaR (more stringent
+            99% confidence) and the expected shortfall. I also added portfolio composition and market regime distribution donut charts and a risk componenet analysis heat map that shows the volitiliy and VaR 
+            contribution by security. Some of the following tasks are carry-overs from last week.</p>
+            <p>To summarize, the goals for this week (in order of priority):
+                <ul>
+                    <li>Ensure the API security updates and stock_cache table updating is working correctly.</li>
+                    <li>Implement a historical price pull from the API for the securities in the portfolio and save to the db.</li>
+                    <li>Add a "Last Update" timestamp to all pages showing market prices.</li>
+                    <li>Ensure most recent data is getting reflected on the frontend</li>
+                    <li>Decide on a parallel processing strategy for API updating and calculating risk metrics.</li>
+                </ul>
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
