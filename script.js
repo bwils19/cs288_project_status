@@ -271,6 +271,33 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+
+    {
+        week: 17,
+        date: "2024-02-17",
+        content: [
+            { type: "text", value: `<p>I am going to try a different, more pleasant-to-read format this week.</p>
+            <p>Things that I accomplished this previous week:
+                <ul>
+                    <li>Created a historical securities pull process and populated a table with historical data.</li>
+                    <li>Implemented the watchlist functionality. Saves to the user's profile. They can see a plot of the past 90 days of the securities closing prices.</li>
+                    <li>Added a "Last Update" timestamp to all pages showing market prices.</li>
+                    <li>Ensured most recent data is getting reflected on the frontend</li>
+                    <li>Ensured that the real price data was being used for the VaR calculations</li>
+                    <li>Populated a metadata table for the securities that shows the sector, asset class and currency</li>
+                    <li>Linked the metadata table to the front end to reflect in the Portfolio composition plot.</li>
+                </ul>
+
+            <p>Things that I am planning to accomplish this week:</p>
+                <ul>
+                    <li>Implement the Portfolio Beta calculation and show it on the Risk Analysis Page.</li>
+                    <li>Implement an ML volatility algorithm and show on the risk analysis page.</li>
+                    <li>Implement the stress scenarios section.</li>
+                    <li>Continue working through list of errors and trying to find more.</li>
+                </ul>
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
