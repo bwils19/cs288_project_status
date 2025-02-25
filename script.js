@@ -298,6 +298,31 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+    {
+        week: 18,
+        date: "2024-02-24",
+        content: [
+            { type: "text", value: `<p>I liked last week's format, so I am going to continue this way. Helps my thinking better than a wall of text.</p>
+            <p>Things that I accomplished this previous week:
+                <ul>
+                    <li>Implemented the Portfolio Beta calculation and show it on the Risk Analysis Page.</li>
+                    <li>Pulled historical timeperiod data for the stress test scenarios including the 2008 Crisis, the COVID crash, 2022 Inflation, and the dot com bust of 2000</li>
+                    <li>Created a manual data pull and job page to monitor when the price updates happen after close.</li>
+                    <li>Created a caching process so the risk analysis page loads faster</li>
+                </ul>
+
+            <p>Things that I am planning to accomplish this week:</p>
+                <ul>
+                    <li>Implement a Stress Scenario functionality for users to test their portfolio against the stress time periods as well as adding in factors of their own;
+                    (interest rates rise, S&P drops X% etc.)</li>
+                    <li>Implement an ML volatility algorithm and show on the risk analysis page.</li>
+                    <li>Continue working through list of errors and trying to find more.</li>
+                    <li>I think that after the implementation of the stress test section I want to start beta testing with users. This is going to require hosting this somewhere, so 
+                    that will be the next thing on the roadmap</li>
+                </ul>
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
