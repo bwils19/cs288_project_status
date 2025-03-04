@@ -323,6 +323,29 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+    {
+        week: 19,
+        date: "2024-03-03",
+        content: [
+            { type: "text", value: `
+            <p>Things that I accomplished this previous week:
+                <ul>
+                    <li>I fixed a bunch of errors that were popping up, such as a user was not able to delete a security from their watchlist.</li>
+                    <li>Found a relatively large bug, where a user can't upload a file of more than 75 securities or else the API breaks and prices don't get updated</li>
+                    <li>Created and migrated data from sqlite to a postgres database on Digital Ocean</li>
+                    <li>Set up a hosting droplet on Digital Ocean</li>
+                </ul>
+
+            <p>Things that I am planning to accomplish this week:</p>
+                <ul>
+                    <li>I need to ensure that everything gets fully integrated on Digital Ocean and hosted on the web.</li>
+                    <li>Create a background process that pulls the most recent prices data for the stocks in all of the portfolios for all users. Need to space it out to avoid the 75 hits/min limit my API key has</li>
+                    <li>Once the above things are done, then I will continue on stress test scenarios</li>
+                    <li>Plan out the best way the stress test scenarios are going to be presented. And ensure all historical data for those time periods is accurate.</li>
+                </ul>
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
