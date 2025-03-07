@@ -328,7 +328,15 @@ const weeklyEntries = [
         date: "2024-03-03",
         content: [
             { type: "text", value: `
-            <p>Things that I accomplished this previous week:
+            <p>These are the three main things that I want to accomplish from here on out for this project:
+                <ol>
+                    <li>Now that I am hosting on Digital Ocean, I want to get a background process up that is pulling updated price data from Alpha Vantage on a quicker cadence.</li>
+                    <li>Get a working version of the Stress Test Scenarios on the platform</li>
+                    <li>Implement a working version for a predictive risk intelligence output. This would ideally detect unusually high portfolio risk ahead of significant downtunrs, identify hidden correlations among
+                    portfolio assets that increase risk and flag anomalous portfolio movements early (before VaR detects them).</li>
+                </ol>
+            </p>
+                <p>Things that I accomplished this previous week:
                 <ul>
                     <li>I fixed a bunch of errors that were popping up, such as a user was not able to delete a security from their watchlist.</li>
                     <li>Found a relatively large bug, where a user can't upload a file of more than 75 securities or else the API breaks and prices don't get updated</li>
