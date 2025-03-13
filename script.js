@@ -354,6 +354,20 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+        {
+        week: 20,
+        date: "2024-03-10",
+        content: [
+            { type: "text", value: `
+            <p>So the large issue that I found where the user can not upload a file of a lot of securities has morphed into restructuring and changing and accelerating of the app. First of all, the premium API limits
+            for Alpha  Vantage is 75 calls per min. That seems like a lot until a user uploads 100 new securities that need to be updated. Then things take a long time to load, prices aren't populated for the securities
+            that got cut off from the API limit. All of this spiralled into automating the price updates, which isn't feasible to do on my local machine since it likes to sleep so much... So I set up the app on Digital 
+            Ocean. But I was running in to issues where that wasn't actually continuously running, so I worked out deploying the app on the server. Then I linked it to my actual domain name. Then I wrote some code to run 
+            periodic updates to update the pricing data for every security that is used on the app. This obvioulsy needs to be done in batches so I don't hit limits. I am running in to errors currently and will continue
+            to debug this process. So my number 1 goal this week and probably next is to get this process updating smoothly in the background so i constanly have fresh pricing data and the app isn't super slow. 
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
