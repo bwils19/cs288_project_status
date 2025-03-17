@@ -368,6 +368,19 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+    {
+        week: 21,
+        date: "2024-03-17",
+        content: [
+            { type: "text", value: `
+            <p>I have successfully fixed some of the scheduled price updating, but want to make it more robust and some of the dates aren't updating on the 
+            portfolio views. My focus this week is to make this super robust and make sure we are always seeing the most current price without sacrificing any 
+            performance of the app as a whole. Right now it takes a few seconds to login and i need to figure that out as well. I want to keep this as the only
+            focus this week. It is important and now that I have this hosted on Digital Ocean, I want to make sure it's consistent and I am keeping detailed logs
+            of the updates and what is happening. I will probably update this entry later this week. 
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
