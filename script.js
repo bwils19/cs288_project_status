@@ -381,6 +381,23 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+        {
+        week: 22,
+        date: "2024-03-24",
+        content: [
+            { type: "text", value: `
+            <p>I created celery tasks and a beat service to schedule those tasks. The main purpose of these tasks has been to automate and schedule automatic price updates. They only run during open market hours while the prices
+            are changing then once after the market closes to get the latest closing price. My premium Alpha Vantage API key allows only 75 calls per minute, so I had to batch the requests as there are far more than 75 securities 
+            within the system. Been testing and debugging this as I go. </p>
+            <p> I was also playing around with the portfolios in the portfolio-overview page and tried to delete a portfolio. I got an error and starting doing some digging and realized a pretty big efficiency in my database strucutre.
+            I had a Securities table that held all of the securities and prices but each security had a row for each portfolio it was in. It felt to me that this was pretty inefficient esspecially since I am trying to update that
+            table with the latest prices. So I did a restructuring which, as you can imagine, broke everything. I created and intermediate table that holds the user_id, portfolio_id and the securities within that portfolio. Then 
+            it joins to the securities table that holds just the security and the most recent price for that security. If we need historical data, we read from the historical_securities table which gets append after the close of the 
+            market each day. I also noticed the DAY CHANGE value was populating for manually created portfolios and not the uploaded ones. I restructured all of the tables and realized that i wasn't pulling in the previous close value
+            from the securities table when i was populating the metric values. I fixed that. 
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
