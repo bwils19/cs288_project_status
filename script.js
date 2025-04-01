@@ -398,6 +398,19 @@ const weeklyEntries = [
             </p>`}
         ]
     },
+            {
+        week: 23,
+        date: "2024-03-31",
+        content: [
+            { type: "text", value: `
+            <p>I have finally worked out the database structure, as well as the DAY_CHANGE and TOTAL_RETURNS values for the portfolios. I
+            included an "i" icon that when the user hovers over it it gives a disclaimer that the TOTAL RETURN value is based solely on 
+            returns and does not include dividends.</p>
+            <p>This week I will be focused on refactoring the Watchlist to a much better format and trying to find out what will be involved 
+            in the addition of the stress scenarios. If I can get those 2 things done I believe I will be in really great shape!
+            </p>`}
+        ]
+    },
 ];
 
 function createEntryElement(entry) {
